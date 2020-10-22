@@ -1,5 +1,5 @@
 import { Type } from 'class-transformer';
-import { IsOptional, IsPositive } from "class-validator";
+import {IsOptional, IsPositive, Min} from "class-validator";
 
 export class PaginationQueryDto {
     @Type(() => Number)
@@ -9,6 +9,6 @@ export class PaginationQueryDto {
 
     @Type(() => Number)
     @IsOptional()
-    @IsPositive()
+    @Min(0)
     page: number;
 }

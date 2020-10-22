@@ -22,7 +22,7 @@ export class UsersService {
     }
 
     async findOne(userHash: string) {
-        const user = await this.userRepository.findOne({hash: userHash});
+        const user = await this.userRepository.findOne({hash: userHash}, {relations: ['classes']});
         if (!user) {
             throw new NotFoundException(`User with hash: ${userHash} not found`);
         }
@@ -48,7 +48,7 @@ export class UsersService {
     }
 
     async remove(userHash: string) {
-        const coffee = await this.findOne(userHash);
-        return this.userRepository.remove(coffee);
+        const user = await this.findOne(userHash);
+        return this.userRepository.remove(user);
     }
 }

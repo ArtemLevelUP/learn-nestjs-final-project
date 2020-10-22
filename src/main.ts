@@ -6,23 +6,23 @@ import { DocumentBuilder, SwaggerModule } from "@nestjs/swagger";
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
-  await app.listen(3500);
 
   app.useGlobalPipes(new ValidationPipe({
     forbidNonWhitelisted: true, // 👈
     whitelist: true,
+    transform: true
   }));
   // app.useGlobalFilters(new HttpExceptionFilter());
 
   const options = new DocumentBuilder()
-      .setTitle('Backend Course API')
-      .setDescription('Backend Course API')
-      .setVersion('0.0.16')
+      .setTitle('Nest.js Fundamentals Final Project Docs')
+      .setDescription('Nest.js Fundamentals Final Project Docs')
+      .setVersion('0.0.17')
       .build();
 
   const document = SwaggerModule.createDocument(app, options);
-
   SwaggerModule.setup('api', app, document);
 
+  await app.listen(3500);
 }
 bootstrap();
