@@ -9,3 +9,13 @@ services:
             POSTGRES_DATABASE: final-project
             POSTGRES_USER: final-project
             POSTGRES_PASSWORD: w3sgDLJyFC
+
+    test-db:
+        image: postgres
+        restart: always
+        ports:
+            - "5431:5432"
+        environment:
+            POSTGRES_DATABASE: final-project-test
+            POSTGRES_USER: final-project-test
+            POSTGRES_PASSWORD: ApS27mVcNWuRz37d

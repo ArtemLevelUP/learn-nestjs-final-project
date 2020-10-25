@@ -20,7 +20,4 @@ export class CreateLessonDto {
     @IsEnum(LesssonAvailability)
     @IsNotEmpty()
     readonly availability: LesssonAvailability;
-
-
 }
-

@@ -1,6 +1,7 @@
 import { Column, Entity, PrimaryGeneratedColumn, JoinTable, ManyToMany } from 'typeorm';
 import {User} from "../../users/entities/user.entity";
 import {ApiHideProperty, ApiProperty} from "@nestjs/swagger";
+import {Lesson} from "../../lessons/entities/lesson.entity";
 
 @Entity()
 export class Class {
@@ -41,7 +42,7 @@ export class Class {
             }
         ]
     })
-    duration: string[];
+    duration: object;
 
     @JoinTable({name: 'students_to_classes'})
     @ManyToMany(
@@ -51,10 +52,10 @@ export class Class {
     @ApiHideProperty()
     students: User[];
 
-    // @JoinTable({name: 'lessons_to_classes'})
-    // @ManyToMany(
-    //     type => User,
-    //     user => user.classes,
-    // )
-    // lessons: Lesso[];
+    @JoinTable({name: 'lessons_to_classes'})
+    @ManyToMany(
+        type => Lesson,
+        lesson => lesson.classes,
+    )
+    lessons: Lesson[];
 }

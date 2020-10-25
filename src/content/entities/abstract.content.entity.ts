@@ -1,5 +1,6 @@
 import {Column, PrimaryGeneratedColumn} from 'typeorm';
 import {ApiHideProperty, ApiProperty} from "@nestjs/swagger";
+import "reflect-metadata";
 
 export abstract class AbstractContentEntity {
     @ApiHideProperty()

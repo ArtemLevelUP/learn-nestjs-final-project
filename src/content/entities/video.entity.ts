@@ -1,7 +1,8 @@
-import {Column, Entity, ManyToMany} from "typeorm";
+import {Column, Entity, JoinTable, ManyToMany} from "typeorm";
 import {AbstractContentEntity} from "./abstract.content.entity";
 import {ApiProperty} from "@nestjs/swagger";
 import {Lesson} from "../../lessons/entities/lesson.entity";
+import "reflect-metadata";
 
 @Entity()
 export class Video extends AbstractContentEntity {
@@ -11,7 +12,7 @@ export class Video extends AbstractContentEntity {
 
     @ManyToMany(
         type => Lesson,
-        lesson => lesson.contentVideos,
+        (lesson: Lesson) => lesson.contentVideos,
     )
     lessons: Lesson[];
 }

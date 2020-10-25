@@ -58,20 +58,37 @@ export class ClassController {
         return this.classService.remove(classHash);
     }
 
+    @Post(':classHash/lessons')
+    @UseGuards(JwtAuthGuard)
+    @HttpCode(HttpStatus.CREATED)
+    addLesson(@Param('classHash') classHash: string, @Body('lessonHash') lessonHash: string) {
+        if (!lessonHash) {
+            throw new BadRequestException(`Missed parameter: lessonHash`);
+        }
+        return this.classService.addLesson(classHash, lessonHash);
+    }
+
+    @Delete(':classHash/lessons/:lessonHash')
+    @UseGuards(JwtAuthGuard)
+    @HttpCode(HttpStatus.NO_CONTENT)
+    removeLesson(@Param('classHash') classHash: string, @Param('lessonHash') lessonHash: string) {
+        return this.classService.removeLesson(classHash, lessonHash);
+    }
+
     @Post(':classHash/enroll')
     @UseGuards(JwtAuthGuard)
     @HttpCode(HttpStatus.CREATED)
-    enroll(@Param('classHash') classHash: string, @Body('userHash') userHash: string) {
+    enrollStudent(@Param('classHash') classHash: string, @Body('userHash') userHash: string) {
         if (!userHash) {
             throw new BadRequestException(`Missed parameter: userHash`);
         }
-        return this.classService.enroll(classHash, userHash);
+        return this.classService.enrollStudent(classHash, userHash);
     }
 
     @Delete(':classHash/expel/:userHash')
     @UseGuards(JwtAuthGuard)
     @HttpCode(HttpStatus.NO_CONTENT)
-    expel(@Param('classHash') classHash: string, @Param('userHash') userHash: string) {
-        return this.classService.expel(classHash, userHash);
+    expelStudent(@Param('classHash') classHash: string, @Param('userHash') userHash: string) {
+        return this.classService.expelStudent(classHash, userHash);
     }
 }

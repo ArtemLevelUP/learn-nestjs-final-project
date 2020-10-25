@@ -41,6 +41,7 @@ export class UsersService {
         }
         const userPreload = await this.userRepository.preload({
             id: user.id,
+            hash: userHash,
             ...updateUserDto,
         });
 

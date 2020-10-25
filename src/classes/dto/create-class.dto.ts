@@ -4,7 +4,6 @@ import {
     Max,
     Min, Validate,
 } from 'class-validator';
-import {ApiProperty} from "@nestjs/swagger";
 import {Type} from "class-transformer";
 import {IsDateDuration} from "../../utils/validators/data-duration";
 
@@ -22,5 +21,5 @@ export class CreateClassDto {
     readonly order: number;
 
     @Validate(IsDateDuration)
-    readonly duration: string[];
+    readonly duration: object;
 }

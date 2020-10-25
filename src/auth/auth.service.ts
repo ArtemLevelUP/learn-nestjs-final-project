@@ -13,7 +13,11 @@ export class AuthService {
     ) {}
 
     async login(body, res) {
-        const credentials = Buffer.from(body.authorization, 'base64').toString('ascii').split(':');
+        const auth = body.auth ?? undefined;
+        if (!auth) {
+            throw new BadRequestException(`Param 'auth' missed`);
+        }
+        const credentials = Buffer.from(auth, 'base64').toString('ascii').split(':');
         const user = await this.userRepository.findOne({
             'email': credentials[0],
             'password': credentials[1],
@@ -28,10 +32,7 @@ export class AuthService {
         const expiresIn = new Date(Date.now() + Number(process.env.EXPIRESIN));
 
         res.cookie('accessToken', accessToken, {expires: expiresIn});
-        res.send({
-            expiresIn: expiresIn,
-            accessToken,
-        });
+        res.send();
     }
 
     async logout(res) {

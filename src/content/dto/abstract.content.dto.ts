@@ -1,5 +1,6 @@
 import {IsNotEmpty, IsNumber, IsString, Max, Min} from "class-validator";
 import {Type} from "class-transformer";
+import "reflect-metadata";
 
 export abstract class AbstractContentDto {
     @IsString()

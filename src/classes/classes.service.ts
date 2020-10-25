@@ -6,6 +6,7 @@ import {PaginationQueryDto} from "../common/dto/pagination-query.dto";
 import {CreateClassDto} from "./dto/create-class.dto";
 import {UpdateClassDto} from "./dto/update-class.dto";
 import {User} from "../users/entities/user.entity";
+import {Lesson} from "../lessons/entities/lesson.entity";
 
 @Injectable()
 export class ClassService {
@@ -14,6 +15,8 @@ export class ClassService {
         private readonly classRepository: Repository<Class>,
         @InjectRepository(User)
         private readonly userRepository: Repository<User>,
+        @InjectRepository(Lesson)
+        private readonly lessonRepository: Repository<Lesson>,
     ) {
 
     }
@@ -27,7 +30,7 @@ export class ClassService {
     }
 
     async findOne(classHash: string) {
-        const classEntity = await this.classRepository.findOne({hash: classHash});
+        const classEntity = await this.classRepository.findOne({hash: classHash}, {relations: ['students', 'lessons']});
         if (!classEntity) {
             throw new NotFoundException(`Class with hash: ${classHash} not found`);
         }
@@ -45,21 +48,13 @@ export class ClassService {
             throw new NotFoundException(`Class with hash: ${classHash} not found`);
         }
 
-        // temporary
-        classEntity.title = updateClassDto.title;
-        classEntity.description = updateClassDto.description;
-        classEntity.order = updateClassDto.order;
-        classEntity.duration = updateClassDto.duration;
+        const classPreload = await this.classRepository.preload({
+            id: classEntity.id,
+            hash: classEntity.hash,
+            ...updateClassDto,
+        });
 
-        // does not works, error: Given object does not have a primary column, cannot transform it to database entity
-        // const classPreload = await this.classRepository.preload({
-        //     id: classEntity.id,
-        //     ...updateClassDto,
-        // });
-        //
-        // return this.classRepository.save(classPreload);
-
-        return this.classRepository.save(classEntity);
+        return this.classRepository.save(classPreload);
     }
 
     async remove(classHash: string) {
@@ -67,7 +62,54 @@ export class ClassService {
         return this.classRepository.remove(classEntity);
     }
 
-    async enroll(classHash: string, userHash: string) {
+    async addLesson(classHash: string, lessonHash: string) {
+        const classEntity = await this.classRepository.findOne({hash: classHash}, { relations: ['lessons'] });
+        if (!classEntity) {
+            throw new BadRequestException(`Class with hash: ${classHash} not found`);
+
+        }
+
+        const lesson = await this.lessonRepository.findOne({hash: lessonHash});
+        if (!lesson) {
+            throw new BadRequestException(`Lesson with hash: ${lessonHash} not found`);
+
+        }
+
+        const lessonExists = classEntity.lessons.find(lesson => lesson.hash === lessonHash);
+        if (lessonExists) {
+            throw new BadRequestException(`Lesson with hash: ${lessonHash} already exists in class with hash: ${classHash}`);
+
+        }
+        classEntity.lessons.push(lesson);
+
+        return this.classRepository.save(classEntity);
+    }
+
+    async removeLesson(classHash: string, lessonHash: string) {
+        const classEntity = await this.classRepository.findOne({hash: classHash}, { relations: ['lessons'] });
+        if (!classEntity) {
+            throw new BadRequestException(`Class with hash: ${classHash} not found`);
+
+        }
+
+        const lesson = await this.lessonRepository.findOne({hash: lessonHash});
+        if (!lesson) {
+            throw new BadRequestException(`Lesson with hash: ${lessonHash} not found`);
+
+        }
+
+        const lessonExists = classEntity.lessons.find(lesson => lesson.hash === lessonHash);
+        if (!lessonExists) {
+            throw new BadRequestException(`Lesson with hash: ${lessonHash} does not exist in class with hash: ${classHash}`);
+
+        }
+        classEntity.lessons.splice(classEntity.lessons.indexOf(lesson), 1);
+
+
+        return this.classRepository.save(classEntity);
+    }
+
+    async enrollStudent(classHash: string, userHash: string) {
         const classEntity = await this.classRepository.findOne({hash: classHash}, { relations: ['students'] });
         if (!classEntity) {
             throw new BadRequestException(`Class with hash: ${classHash} not found`);
@@ -90,7 +132,7 @@ export class ClassService {
         return this.classRepository.save(classEntity);
     }
 
-    async expel(classHash: string, userHash: string) {
+    async expelStudent(classHash: string, userHash: string) {
         const classEntity = await this.classRepository.findOne({hash: classHash}, { relations: ['students'] });
         if (!classEntity) {
             throw new BadRequestException(`Class with hash: ${classHash} not found`);
@@ -109,7 +151,6 @@ export class ClassService {
 
         }
         classEntity.students.splice(classEntity.students.indexOf(student), 1);
-
 
         return this.classRepository.save(classEntity);
     }

@@ -1,0 +1,1756 @@
+{
+	"version": 1,
+	"collections": [
+		{
+			"id": "25683f3d-4314-4543-a38f-95438e27d752",
+			"name": "Video",
+			"description": null,
+			"auth": null,
+			"events": null,
+			"variables": [],
+			"order": [
+				"310dac6e-257e-4726-9239-ce1bb94ebe5c",
+				"caac6eff-bd39-4b10-b400-5a22420a2922",
+				"5327d703-20fa-4407-90d7-cf37e9f822c7",
+				"1cbb59c1-90a1-4466-8ae1-f0104bb40255",
+				"4fd88182-a1c2-4ac2-8849-d70d1a430c9c"
+			],
+			"folders_order": [],
+			"protocolProfileBehavior": {},
+			"folders": [],
+			"requests": [
+				{
+					"id": "1cbb59c1-90a1-4466-8ae1-f0104bb40255",
+					"name": "Update",
+					"url": "http://localhost:3500/videos/f1e599db-12f6-4cb8-9fba-8e0755c983df",
+					"description": "",
+					"data": [
+						{
+							"key": "title",
+							"value": "Test video title #1",
+							"description": "",
+							"type": "text",
+							"enabled": true
+						},
+						{
+							"key": "order",
+							"value": "2",
+							"description": "",
+							"type": "text",
+							"enabled": true
+						},
+						{
+							"key": "uri",
+							"value": "https://education-nestjs-final-project-docs-mzzz.dev.alldigitalads.com/school/docs/#/",
+							"description": "",
+							"type": "text",
+							"enabled": true
+						}
+					],
+					"dataOptions": null,
+					"dataMode": "urlencoded",
+					"headerData": null,
+					"method": "PUT",
+					"pathVariableData": [],
+					"queryParams": [],
+					"auth": {
+						"type": "bearer",
+						"bearer": [
+							{
+								"key": "token",
+								"value": "{{access token}}"
+							}
+						]
+					},
+					"events": null,
+					"folder": null,
+					"currentHelper": "bearerAuth",
+					"helperAttributes": {
+						"id": "bearer",
+						"token": "{{access token}}"
+					},
+					"collectionId": "25683f3d-4314-4543-a38f-95438e27d752",
+					"pathVariables": {}
+				},
+				{
+					"id": "310dac6e-257e-4726-9239-ce1bb94ebe5c",
+					"name": "Create",
+					"url": "http://localhost:3500/videos",
+					"description": "",
+					"data": [
+						{
+							"key": "title",
+							"value": "Test video title",
+							"description": "",
+							"type": "text",
+							"enabled": true
+						},
+						{
+							"key": "order",
+							"value": "1",
+							"description": "",
+							"type": "text",
+							"enabled": true
+						},
+						{
+							"key": "uri",
+							"value": "https://education-nestjs-final-project-docs-mzzz.dev.alldigitalads.com/school/docs/#/",
+							"description": "",
+							"type": "text",
+							"enabled": true
+						}
+					],
+					"dataOptions": null,
+					"dataMode": "urlencoded",
+					"headerData": null,
+					"method": "POST",
+					"pathVariableData": [],
+					"queryParams": [],
+					"auth": {
+						"type": "bearer",
+						"bearer": [
+							{
+								"key": "token",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJoYXNoIjoiYTZhNzg4OGUtY2U4OS00ZWY4LTkyNjMtNjg1NzBiMGU3N2ZhIiwicGFzc3dvcmQiOiJwYXNzMTIzIiwiaWF0IjoxNjAzMTIzMjQ2LCJleHAiOjE2MDMxMjMyNjA2MDIwOTYzMH0.bS_fYh83ugpDmFvggh2BF_bi4vnPMMo8nnipbvMWOQo"
+							}
+						]
+					},
+					"events": null,
+					"folder": null,
+					"currentHelper": "bearerAuth",
+					"helperAttributes": {
+						"id": "bearer",
+						"token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJoYXNoIjoiYTZhNzg4OGUtY2U4OS00ZWY4LTkyNjMtNjg1NzBiMGU3N2ZhIiwicGFzc3dvcmQiOiJwYXNzMTIzIiwiaWF0IjoxNjAzMTIzMjQ2LCJleHAiOjE2MDMxMjMyNjA2MDIwOTYzMH0.bS_fYh83ugpDmFvggh2BF_bi4vnPMMo8nnipbvMWOQo"
+					},
+					"collectionId": "25683f3d-4314-4543-a38f-95438e27d752",
+					"pathVariables": {}
+				},
+				{
+					"id": "4fd88182-a1c2-4ac2-8849-d70d1a430c9c",
+					"name": "Delete",
+					"url": "http://localhost:3500/videos/32140283-3fda-4c40-a561-b3386f0d8b39",
+					"description": "",
+					"data": [],
+					"dataOptions": null,
+					"dataMode": "urlencoded",
+					"headerData": null,
+					"method": "DELETE",
+					"pathVariableData": [],
+					"queryParams": [],
+					"auth": {
+						"type": "bearer",
+						"bearer": [
+							{
+								"key": "token",
+								"value": "{{access token}}"
+							}
+						]
+					},
+					"events": null,
+					"folder": null,
+					"currentHelper": "bearerAuth",
+					"helperAttributes": {
+						"id": "bearer",
+						"token": "{{access token}}"
+					},
+					"collectionId": "25683f3d-4314-4543-a38f-95438e27d752",
+					"pathVariables": {}
+				},
+				{
+					"id": "5327d703-20fa-4407-90d7-cf37e9f822c7",
+					"name": "Read One",
+					"url": "http://localhost:3500/videos/f1e599db-12f6-4cb8-9fba-8e0755c983df",
+					"description": "",
+					"data": [],
+					"dataOptions": null,
+					"dataMode": "urlencoded",
+					"headerData": null,
+					"method": "GET",
+					"pathVariableData": [],
+					"queryParams": [],
+					"auth": {
+						"type": "bearer",
+						"bearer": [
+							{
+								"key": "token",
+								"value": "{{access token}}"
+							}
+						]
+					},
+					"events": null,
+					"folder": null,
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"currentHelper": "bearerAuth",
+					"helperAttributes": {
+						"id": "bearer",
+						"token": "{{access token}}"
+					},
+					"collectionId": "25683f3d-4314-4543-a38f-95438e27d752",
+					"pathVariables": {}
+				},
+				{
+					"id": "caac6eff-bd39-4b10-b400-5a22420a2922",
+					"name": "Read All",
+					"url": "http://localhost:3500/videos?limit=10&page=0",
+					"description": "",
+					"data": [],
+					"dataOptions": null,
+					"dataMode": "urlencoded",
+					"headerData": null,
+					"method": "GET",
+					"pathVariableData": [],
+					"queryParams": [
+						{
+							"key": "limit",
+							"value": "10",
+							"equals": true,
+							"description": "",
+							"enabled": true
+						},
+						{
+							"key": "page",
+							"value": "0",
+							"equals": true,
+							"description": "",
+							"enabled": true
+						}
+					],
+					"auth": {
+						"type": "bearer",
+						"bearer": [
+							{
+								"key": "token",
+								"value": "{{access token}}"
+							}
+						]
+					},
+					"events": null,
+					"folder": null,
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"currentHelper": "bearerAuth",
+					"helperAttributes": {
+						"id": "bearer",
+						"token": "{{access token}}"
+					},
+					"collectionId": "25683f3d-4314-4543-a38f-95438e27d752",
+					"pathVariables": {}
+				}
+			]
+		},
+		{
+			"id": "2c3bebd1-5b6c-453b-bde3-619c6463edba",
+			"name": "Auth",
+			"description": null,
+			"auth": null,
+			"events": null,
+			"variables": [],
+			"order": [
+				"0a5b4ebf-d775-47a6-8fac-81f651f2744a",
+				"873e4196-f741-48bb-b5dc-544d7fb0f503"
+			],
+			"folders_order": [],
+			"protocolProfileBehavior": {},
+			"folders": [],
+			"requests": [
+				{
+					"id": "0a5b4ebf-d775-47a6-8fac-81f651f2744a",
+					"name": "Login",
+					"url": "http://localhost:3500/login",
+					"description": "",
+					"data": [
+						{
+							"key": "authorization",
+							"value": "Base ",
+							"description": "",
+							"type": "text",
+							"enabled": true
+						}
+					],
+					"dataOptions": null,
+					"dataMode": "urlencoded",
+					"headerData": null,
+					"method": "POST",
+					"pathVariableData": [],
+					"queryParams": [],
+					"auth": {
+						"type": "noauth",
+						"noauth": []
+					},
+					"events": null,
+					"folder": null,
+					"currentHelper": null,
+					"helperAttributes": null,
+					"collectionId": "2c3bebd1-5b6c-453b-bde3-619c6463edba",
+					"pathVariables": {}
+				},
+				{
+					"id": "873e4196-f741-48bb-b5dc-544d7fb0f503",
+					"name": "Logout",
+					"url": "http://localhost:3500/logout",
+					"description": "",
+					"data": [],
+					"dataOptions": null,
+					"dataMode": "urlencoded",
+					"headerData": null,
+					"method": "POST",
+					"pathVariableData": [],
+					"queryParams": [],
+					"auth": {
+						"type": "bearer",
+						"bearer": [
+							{
+								"key": "token",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJoYXNoIjoiYTZhNzg4OGUtY2U4OS00ZWY4LTkyNjMtNjg1NzBiMGU3N2ZhIiwicGFzc3dvcmQiOiJwYXNzMTIzIiwiaWF0IjoxNjAzMTM0MzUwLCJleHAiOjE2MDMxMzQzMDU3NTEyMDc0MH0.OxslLEdRRSBJeHHGIwsOxIbrc_wo2L6uJ9XziyrPrcI"
+							}
+						]
+					},
+					"events": null,
+					"folder": null,
+					"currentHelper": "bearerAuth",
+					"helperAttributes": {
+						"id": "bearer",
+						"token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJoYXNoIjoiYTZhNzg4OGUtY2U4OS00ZWY4LTkyNjMtNjg1NzBiMGU3N2ZhIiwicGFzc3dvcmQiOiJwYXNzMTIzIiwiaWF0IjoxNjAzMTM0MzUwLCJleHAiOjE2MDMxMzQzMDU3NTEyMDc0MH0.OxslLEdRRSBJeHHGIwsOxIbrc_wo2L6uJ9XziyrPrcI"
+					},
+					"collectionId": "2c3bebd1-5b6c-453b-bde3-619c6463edba",
+					"pathVariables": {}
+				}
+			]
+		},
+		{
+			"id": "41187497-5972-4253-bca1-ddba3c2ee0dc",
+			"name": "Lesson",
+			"description": null,
+			"auth": null,
+			"events": null,
+			"variables": [],
+			"order": [
+				"1d1cab84-5748-4ae1-9de8-2eaa38fce62c",
+				"cc6940fe-0cdb-42e7-a78a-d4b962725335",
+				"baf1d42a-d701-401a-a994-1f0fa84f2bc5",
+				"be0c3f76-b3cb-47e2-8bf6-698c2fe8c105",
+				"95a55dd7-3abf-4c5e-9b1a-326f1c706c4d",
+				"d11ca672-c3d9-4108-9915-6a0eed137036",
+				"764f8011-1aad-448b-80db-9ff088ef738f",
+				"881e7e1d-c54c-4f36-b8f5-350cb4877e59",
+				"f9a0f427-a82c-4ec7-ba98-516286270e36",
+				"1496291e-7e56-4d14-88f7-321d48aa7e8c",
+				"e5c36ce2-0779-47e5-bc0f-d1988354f9f0"
+			],
+			"folders_order": [],
+			"protocolProfileBehavior": {},
+			"folders": [],
+			"requests": [
+				{
+					"id": "1496291e-7e56-4d14-88f7-321d48aa7e8c",
+					"name": "Add KeyNote (to lesson)",
+					"url": "http://localhost:3500/lessons/b2d419f8-7e98-4ea5-b53c-426ecbd4ce33/keynotes",
+					"description": "",
+					"data": [
+						{
+							"key": "keyNoteHash",
+							"value": "d2515c48-3368-4452-8b66-fafe6c43cf54",
+							"description": "",
+							"type": "text",
+							"enabled": true
+						}
+					],
+					"dataOptions": null,
+					"dataMode": "urlencoded",
+					"headerData": null,
+					"method": "POST",
+					"pathVariableData": [],
+					"queryParams": [],
+					"auth": {
+						"type": "bearer",
+						"bearer": [
+							{
+								"key": "token",
+								"value": "{{access token}}"
+							}
+						]
+					},
+					"events": null,
+					"folder": null,
+					"currentHelper": "bearerAuth",
+					"helperAttributes": {
+						"id": "bearer",
+						"token": "{{access token}}"
+					},
+					"collectionId": "41187497-5972-4253-bca1-ddba3c2ee0dc",
+					"pathVariables": {}
+				},
+				{
+					"id": "1d1cab84-5748-4ae1-9de8-2eaa38fce62c",
+					"name": "Create",
+					"url": "http://localhost:3500/lessons",
+					"description": "",
+					"data": [
+						{
+							"key": "title",
+							"value": "Test lesson title",
+							"description": "",
+							"type": "text",
+							"enabled": true
+						},
+						{
+							"key": "order",
+							"value": "1",
+							"description": "",
+							"type": "text",
+							"enabled": true
+						},
+						{
+							"key": "description",
+							"value": "Test lesson description",
+							"description": "",
+							"type": "text",
+							"enabled": true
+						},
+						{
+							"key": "availability",
+							"value": "premium",
+							"description": "",
+							"type": "text",
+							"enabled": true
+						}
+					],
+					"dataOptions": null,
+					"dataMode": "urlencoded",
+					"headerData": null,
+					"method": "POST",
+					"pathVariableData": [],
+					"queryParams": [],
+					"auth": {
+						"type": "bearer",
+						"bearer": [
+							{
+								"key": "token",
+								"value": "{{access token}}"
+							}
+						]
+					},
+					"events": null,
+					"folder": null,
+					"currentHelper": "bearerAuth",
+					"helperAttributes": {
+						"id": "bearer",
+						"token": "{{access token}}"
+					},
+					"collectionId": "41187497-5972-4253-bca1-ddba3c2ee0dc",
+					"pathVariables": {}
+				},
+				{
+					"id": "764f8011-1aad-448b-80db-9ff088ef738f",
+					"name": "Add Video (to lesson)",
+					"url": "http://localhost:3500/lessons/b2d419f8-7e98-4ea5-b53c-426ecbd4ce33/videos",
+					"description": "",
+					"data": [
+						{
+							"key": "videoHash",
+							"value": "f1e599db-12f6-4cb8-9fba-8e0755c983df",
+							"description": "",
+							"type": "text",
+							"enabled": true
+						}
+					],
+					"dataOptions": null,
+					"dataMode": "urlencoded",
+					"headerData": null,
+					"method": "POST",
+					"pathVariableData": [],
+					"queryParams": [],
+					"auth": {
+						"type": "bearer",
+						"bearer": [
+							{
+								"key": "token",
+								"value": "{{access token}}"
+							}
+						]
+					},
+					"events": null,
+					"folder": null,
+					"currentHelper": "bearerAuth",
+					"helperAttributes": {
+						"id": "bearer",
+						"token": "{{access token}}"
+					},
+					"collectionId": "41187497-5972-4253-bca1-ddba3c2ee0dc",
+					"pathVariables": {}
+				},
+				{
+					"id": "881e7e1d-c54c-4f36-b8f5-350cb4877e59",
+					"name": "Remove Video (from lesson)",
+					"url": "http://localhost:3500/lessons/b2d419f8-7e98-4ea5-b53c-426ecbd4ce33/videos/f1e599db-12f6-4cb8-9fba-8e0755c983df",
+					"description": "",
+					"data": [],
+					"dataOptions": null,
+					"dataMode": "urlencoded",
+					"headerData": null,
+					"method": "DELETE",
+					"pathVariableData": [],
+					"queryParams": [],
+					"auth": {
+						"type": "bearer",
+						"bearer": [
+							{
+								"key": "token",
+								"value": "{{access token}}"
+							}
+						]
+					},
+					"events": null,
+					"folder": null,
+					"currentHelper": "bearerAuth",
+					"helperAttributes": {
+						"id": "bearer",
+						"token": "{{access token}}"
+					},
+					"collectionId": "41187497-5972-4253-bca1-ddba3c2ee0dc",
+					"pathVariables": {}
+				},
+				{
+					"id": "95a55dd7-3abf-4c5e-9b1a-326f1c706c4d",
+					"name": "Delete",
+					"url": "http://localhost:3500/lessons/5cb01700-a07b-4026-8fb8-98fe5a40be21",
+					"description": "",
+					"data": [],
+					"dataOptions": null,
+					"dataMode": "urlencoded",
+					"headerData": null,
+					"method": "DELETE",
+					"pathVariableData": [],
+					"queryParams": [],
+					"auth": {
+						"type": "bearer",
+						"bearer": [
+							{
+								"key": "token",
+								"value": "{{access token}}"
+							}
+						]
+					},
+					"events": null,
+					"folder": null,
+					"currentHelper": "bearerAuth",
+					"helperAttributes": {
+						"id": "bearer",
+						"token": "{{access token}}"
+					},
+					"collectionId": "41187497-5972-4253-bca1-ddba3c2ee0dc",
+					"pathVariables": {}
+				},
+				{
+					"id": "baf1d42a-d701-401a-a994-1f0fa84f2bc5",
+					"name": "Read One",
+					"url": "http://localhost:3500/lessons/b2d419f8-7e98-4ea5-b53c-426ecbd4ce33",
+					"description": "",
+					"data": [],
+					"dataOptions": null,
+					"dataMode": "urlencoded",
+					"headerData": null,
+					"method": "GET",
+					"pathVariableData": [],
+					"queryParams": [],
+					"auth": {
+						"type": "bearer",
+						"bearer": [
+							{
+								"key": "token",
+								"value": "{{access token}}"
+							}
+						]
+					},
+					"events": null,
+					"folder": null,
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"currentHelper": "bearerAuth",
+					"helperAttributes": {
+						"id": "bearer",
+						"token": "{{access token}}"
+					},
+					"collectionId": "41187497-5972-4253-bca1-ddba3c2ee0dc",
+					"pathVariables": {}
+				},
+				{
+					"id": "be0c3f76-b3cb-47e2-8bf6-698c2fe8c105",
+					"name": "Update",
+					"url": "http://localhost:3500/lessons/b2d419f8-7e98-4ea5-b53c-426ecbd4ce33",
+					"description": "",
+					"data": [
+						{
+							"key": "title",
+							"value": "Test lesson title (updated)",
+							"description": "",
+							"type": "text",
+							"enabled": true
+						},
+						{
+							"key": "order",
+							"value": "1",
+							"description": "",
+							"type": "text",
+							"enabled": true
+						},
+						{
+							"key": "description",
+							"value": "Test lesson description",
+							"description": "",
+							"type": "text",
+							"enabled": true
+						},
+						{
+							"key": "availability",
+							"value": "premium",
+							"description": "",
+							"type": "text",
+							"enabled": true
+						}
+					],
+					"dataOptions": null,
+					"dataMode": "urlencoded",
+					"headerData": null,
+					"method": "PUT",
+					"pathVariableData": [],
+					"queryParams": [],
+					"auth": {
+						"type": "bearer",
+						"bearer": [
+							{
+								"key": "token",
+								"value": "{{access token}}"
+							}
+						]
+					},
+					"events": null,
+					"folder": null,
+					"currentHelper": "bearerAuth",
+					"helperAttributes": {
+						"id": "bearer",
+						"token": "{{access token}}"
+					},
+					"collectionId": "41187497-5972-4253-bca1-ddba3c2ee0dc",
+					"pathVariables": {}
+				},
+				{
+					"id": "cc6940fe-0cdb-42e7-a78a-d4b962725335",
+					"name": "Read All",
+					"url": "http://localhost:3500/lessons?limit=10&page=0",
+					"description": "",
+					"data": [],
+					"dataOptions": null,
+					"dataMode": "urlencoded",
+					"headerData": null,
+					"method": "GET",
+					"pathVariableData": [],
+					"queryParams": [
+						{
+							"key": "limit",
+							"value": "10",
+							"equals": true,
+							"description": "",
+							"enabled": true
+						},
+						{
+							"key": "page",
+							"value": "0",
+							"equals": true,
+							"description": "",
+							"enabled": true
+						}
+					],
+					"auth": {
+						"type": "bearer",
+						"bearer": [
+							{
+								"key": "token",
+								"value": "{{access token}}"
+							}
+						]
+					},
+					"events": null,
+					"folder": null,
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"currentHelper": "bearerAuth",
+					"helperAttributes": {
+						"id": "bearer",
+						"token": "{{access token}}"
+					},
+					"collectionId": "41187497-5972-4253-bca1-ddba3c2ee0dc",
+					"pathVariables": {}
+				},
+				{
+					"id": "d11ca672-c3d9-4108-9915-6a0eed137036",
+					"name": "Find Video (in lesson)",
+					"url": "http://localhost:3500/lessons/b2d419f8-7e98-4ea5-b53c-426ecbd4ce33/videos/f1e599db-12f6-4cb8-9fba-8e0755c983df",
+					"description": "",
+					"data": [],
+					"dataOptions": null,
+					"dataMode": "urlencoded",
+					"headerData": null,
+					"method": "GET",
+					"pathVariableData": [],
+					"queryParams": [],
+					"auth": {
+						"type": "bearer",
+						"bearer": [
+							{
+								"key": "token",
+								"value": "{{access token}}"
+							}
+						]
+					},
+					"events": null,
+					"folder": null,
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"currentHelper": "bearerAuth",
+					"helperAttributes": {
+						"id": "bearer",
+						"token": "{{access token}}"
+					},
+					"collectionId": "41187497-5972-4253-bca1-ddba3c2ee0dc",
+					"pathVariables": {}
+				},
+				{
+					"id": "e5c36ce2-0779-47e5-bc0f-d1988354f9f0",
+					"name": "Remove KeyNote (from lesson)",
+					"url": "http://localhost:3500/lessons/b2d419f8-7e98-4ea5-b53c-426ecbd4ce33/keynotes/fe2148fd-c9cc-4531-b62d-43b643bcaf81",
+					"description": "",
+					"data": [],
+					"dataOptions": null,
+					"dataMode": "urlencoded",
+					"headerData": null,
+					"method": "DELETE",
+					"pathVariableData": [],
+					"queryParams": [],
+					"auth": {
+						"type": "bearer",
+						"bearer": [
+							{
+								"key": "token",
+								"value": "{{access token}}"
+							}
+						]
+					},
+					"events": null,
+					"folder": null,
+					"currentHelper": "bearerAuth",
+					"helperAttributes": {
+						"id": "bearer",
+						"token": "{{access token}}"
+					},
+					"collectionId": "41187497-5972-4253-bca1-ddba3c2ee0dc",
+					"pathVariables": {}
+				},
+				{
+					"id": "f9a0f427-a82c-4ec7-ba98-516286270e36",
+					"name": "Find KeyNote (in lesson)",
+					"url": "http://localhost:3500/lessons/b2d419f8-7e98-4ea5-b53c-426ecbd4ce33/keynotes/fe2148fd-c9cc-4531-b62d-43b643bcaf81",
+					"description": "",
+					"data": [],
+					"dataOptions": null,
+					"dataMode": "urlencoded",
+					"headerData": null,
+					"method": "GET",
+					"pathVariableData": [],
+					"queryParams": [],
+					"auth": {
+						"type": "bearer",
+						"bearer": [
+							{
+								"key": "token",
+								"value": "{{access token}}"
+							}
+						]
+					},
+					"events": null,
+					"folder": null,
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"currentHelper": "bearerAuth",
+					"helperAttributes": {
+						"id": "bearer",
+						"token": "{{access token}}"
+					},
+					"collectionId": "41187497-5972-4253-bca1-ddba3c2ee0dc",
+					"pathVariables": {}
+				}
+			]
+		},
+		{
+			"id": "861a0f06-d9ab-432b-a4ab-b99e7d2f8a8f",
+			"name": "Class",
+			"description": null,
+			"auth": null,
+			"events": null,
+			"variables": [],
+			"order": [
+				"004c95d0-f174-42bf-a31a-c3c59c2cd480",
+				"a7d3662d-2703-4d22-afec-af1dcd3793b4",
+				"6b2dc31f-ac2e-4e88-97cb-15fda29dda70",
+				"be02d3b3-efe6-4735-a010-6ba98f87754f",
+				"876bbd9b-43c0-4598-ae6f-1d291babeca0",
+				"fe4631a0-b345-4ab1-ab7a-b4040001269b",
+				"12da2f99-a9eb-4142-9962-0c778c707be5",
+				"178688af-80d8-407d-b79c-8a4774c27e8a",
+				"082dc046-0de0-45ab-9761-b23186e77e25"
+			],
+			"folders_order": [],
+			"protocolProfileBehavior": {},
+			"folders": [],
+			"requests": [
+				{
+					"id": "004c95d0-f174-42bf-a31a-c3c59c2cd480",
+					"name": "Create",
+					"url": "http://localhost:3500/classes",
+					"description": "",
+					"data": [
+						{
+							"key": "title",
+							"value": "test class",
+							"description": "",
+							"type": "text",
+							"enabled": true
+						},
+						{
+							"key": "description",
+							"value": "test description",
+							"description": "",
+							"type": "text",
+							"enabled": true
+						},
+						{
+							"key": "order",
+							"value": "1",
+							"description": "",
+							"type": "text",
+							"enabled": true
+						},
+						{
+							"key": "duration[started]",
+							"value": "2020-10-21T08:26:06.519Z",
+							"description": "",
+							"type": "text",
+							"enabled": true
+						},
+						{
+							"key": "duration[closed]",
+							"value": "2020-10-28T08:26:06.519Z",
+							"description": "",
+							"type": "text",
+							"enabled": true
+						}
+					],
+					"dataOptions": null,
+					"dataMode": "urlencoded",
+					"headerData": null,
+					"method": "POST",
+					"pathVariableData": [],
+					"queryParams": [],
+					"auth": {
+						"type": "bearer",
+						"bearer": [
+							{
+								"key": "token",
+								"value": "{{access token}}"
+							},
+							{
+								"key": "password",
+								"value": "{{access token}}"
+							}
+						]
+					},
+					"events": null,
+					"folder": null,
+					"currentHelper": "bearerAuth",
+					"helperAttributes": {
+						"id": "bearer",
+						"token": "{{access token}}"
+					},
+					"collectionId": "861a0f06-d9ab-432b-a4ab-b99e7d2f8a8f",
+					"pathVariables": {}
+				},
+				{
+					"id": "082dc046-0de0-45ab-9761-b23186e77e25",
+					"name": "Remove Lesson (from class)",
+					"url": "http://localhost:3500/classes/08b483ef-f8d5-4d2c-910a-ee70db687309/lessons/b2d419f8-7e98-4ea5-b53c-426ecbd4ce33",
+					"description": "",
+					"data": [],
+					"dataOptions": null,
+					"dataMode": "urlencoded",
+					"headerData": null,
+					"method": "DELETE",
+					"pathVariableData": [],
+					"queryParams": [],
+					"auth": {
+						"type": "bearer",
+						"bearer": [
+							{
+								"key": "token",
+								"value": "{{access token}}"
+							},
+							{
+								"key": "password",
+								"value": "{{access token}}"
+							}
+						]
+					},
+					"events": null,
+					"folder": null,
+					"currentHelper": "bearerAuth",
+					"helperAttributes": {
+						"id": "bearer",
+						"token": "{{access token}}"
+					},
+					"collectionId": "861a0f06-d9ab-432b-a4ab-b99e7d2f8a8f",
+					"pathVariables": {}
+				},
+				{
+					"id": "12da2f99-a9eb-4142-9962-0c778c707be5",
+					"name": "Expel Student",
+					"url": "http://localhost:3500/classes/08b483ef-f8d5-4d2c-910a-ee70db687309/expel/0081634a-1bf9-4f43-984d-c34e287e6e51",
+					"description": "",
+					"data": [],
+					"dataOptions": null,
+					"dataMode": "urlencoded",
+					"headerData": null,
+					"method": "DELETE",
+					"pathVariableData": [],
+					"queryParams": [],
+					"auth": {
+						"type": "bearer",
+						"bearer": [
+							{
+								"key": "token",
+								"value": "{{access token}}"
+							},
+							{
+								"key": "password",
+								"value": "{{access token}}"
+							}
+						]
+					},
+					"events": null,
+					"folder": null,
+					"currentHelper": "bearerAuth",
+					"helperAttributes": {
+						"id": "bearer",
+						"token": "{{access token}}"
+					},
+					"collectionId": "861a0f06-d9ab-432b-a4ab-b99e7d2f8a8f",
+					"pathVariables": {}
+				},
+				{
+					"id": "178688af-80d8-407d-b79c-8a4774c27e8a",
+					"name": "Add Lesson (to class)",
+					"url": "http://localhost:3500/classes/08b483ef-f8d5-4d2c-910a-ee70db687309/lessons",
+					"description": "",
+					"data": [
+						{
+							"key": "lessonHash",
+							"value": "b2d419f8-7e98-4ea5-b53c-426ecbd4ce33",
+							"description": "",
+							"type": "text",
+							"enabled": true
+						}
+					],
+					"dataOptions": null,
+					"dataMode": "urlencoded",
+					"headerData": null,
+					"method": "POST",
+					"pathVariableData": [],
+					"queryParams": [],
+					"auth": {
+						"type": "bearer",
+						"bearer": [
+							{
+								"key": "token",
+								"value": "{{access token}}"
+							},
+							{
+								"key": "password",
+								"value": "{{access token}}"
+							}
+						]
+					},
+					"events": null,
+					"folder": null,
+					"currentHelper": "bearerAuth",
+					"helperAttributes": {
+						"id": "bearer",
+						"token": "{{access token}}"
+					},
+					"collectionId": "861a0f06-d9ab-432b-a4ab-b99e7d2f8a8f",
+					"pathVariables": {}
+				},
+				{
+					"id": "6b2dc31f-ac2e-4e88-97cb-15fda29dda70",
+					"name": "Read One",
+					"url": "http://localhost:3500/classes/400571f2-edce-4c86-95ad-3c0ca0b0955a",
+					"description": "",
+					"data": [],
+					"dataOptions": null,
+					"dataMode": "urlencoded",
+					"headerData": [
+						{
+							"key": "Authorization",
+							"value": "Bearer eyJhbGciOiJIUzI1NiJ9.dGVzdEB0ZXN0LmNvbQ.boSBCitLiX9QXt389oNFceJHvZ3_C0F8Og7zlj--FgA",
+							"type": "text",
+							"enabled": false,
+							"description": ""
+						}
+					],
+					"method": "GET",
+					"pathVariableData": [],
+					"queryParams": [],
+					"auth": {
+						"type": "bearer",
+						"bearer": [
+							{
+								"key": "token",
+								"value": "{{access token}}"
+							}
+						]
+					},
+					"events": null,
+					"folder": null,
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"currentHelper": "bearerAuth",
+					"helperAttributes": {
+						"id": "bearer",
+						"token": "{{access token}}"
+					},
+					"collectionId": "861a0f06-d9ab-432b-a4ab-b99e7d2f8a8f",
+					"headers": "//Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.dGVzdEB0ZXN0LmNvbQ.boSBCitLiX9QXt389oNFceJHvZ3_C0F8Og7zlj--FgA\n",
+					"pathVariables": {}
+				},
+				{
+					"id": "876bbd9b-43c0-4598-ae6f-1d291babeca0",
+					"name": "Delete",
+					"url": "http://localhost:3500/classes/400571f2-edce-4c86-95ad-3c0ca0b0955a",
+					"description": "",
+					"data": [],
+					"dataOptions": null,
+					"dataMode": "urlencoded",
+					"headerData": [
+						{
+							"key": "Authorization",
+							"value": "Bearer eyJhbGciOiJIUzI1NiJ9.dGVzdEB0ZXN0LmNvbQ.boSBCitLiX9QXt389oNFceJHvZ3_C0F8Og7zlj--FgA",
+							"type": "text",
+							"enabled": false,
+							"description": ""
+						}
+					],
+					"method": "DELETE",
+					"pathVariableData": [],
+					"queryParams": [],
+					"auth": {
+						"type": "bearer",
+						"bearer": [
+							{
+								"key": "token",
+								"value": "{{access token}}"
+							}
+						]
+					},
+					"events": null,
+					"folder": null,
+					"currentHelper": "bearerAuth",
+					"helperAttributes": {
+						"id": "bearer",
+						"token": "{{access token}}"
+					},
+					"collectionId": "861a0f06-d9ab-432b-a4ab-b99e7d2f8a8f",
+					"headers": "//Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.dGVzdEB0ZXN0LmNvbQ.boSBCitLiX9QXt389oNFceJHvZ3_C0F8Og7zlj--FgA\n",
+					"pathVariables": {}
+				},
+				{
+					"id": "a7d3662d-2703-4d22-afec-af1dcd3793b4",
+					"name": "Read All",
+					"url": "http://localhost:3500/classes?limit=10&page=0",
+					"description": "",
+					"data": [],
+					"dataOptions": null,
+					"dataMode": "urlencoded",
+					"headerData": [
+						{
+							"key": "Authorization",
+							"value": "Bearer eyJhbGciOiJIUzI1NiJ9.dGVzdEB0ZXN0LmNvbQ.boSBCitLiX9QXt389oNFceJHvZ3_C0F8Og7zlj--FgA",
+							"type": "text",
+							"enabled": false,
+							"description": ""
+						}
+					],
+					"method": "GET",
+					"pathVariableData": [],
+					"queryParams": [
+						{
+							"key": "limit",
+							"value": "10",
+							"equals": true,
+							"description": "",
+							"enabled": true
+						},
+						{
+							"key": "page",
+							"value": "0",
+							"equals": true,
+							"description": "",
+							"enabled": true
+						}
+					],
+					"auth": {
+						"type": "bearer",
+						"bearer": [
+							{
+								"key": "token",
+								"value": "{{access token}}"
+							}
+						]
+					},
+					"events": null,
+					"folder": null,
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"currentHelper": "bearerAuth",
+					"helperAttributes": {
+						"id": "bearer",
+						"token": "{{access token}}"
+					},
+					"collectionId": "861a0f06-d9ab-432b-a4ab-b99e7d2f8a8f",
+					"headers": "//Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.dGVzdEB0ZXN0LmNvbQ.boSBCitLiX9QXt389oNFceJHvZ3_C0F8Og7zlj--FgA\n",
+					"pathVariables": {}
+				},
+				{
+					"id": "be02d3b3-efe6-4735-a010-6ba98f87754f",
+					"name": "Update",
+					"url": "http://localhost:3500/classes/361b1caa-5c10-4fd8-a97d-07c35f419be8",
+					"description": "",
+					"data": [
+						{
+							"key": "title",
+							"value": "test class #1",
+							"description": "",
+							"type": "text",
+							"enabled": true
+						},
+						{
+							"key": "description",
+							"value": "test description",
+							"description": "",
+							"type": "text",
+							"enabled": true
+						},
+						{
+							"key": "order",
+							"value": "1",
+							"description": "",
+							"type": "text",
+							"enabled": true
+						},
+						{
+							"key": "duration[started]",
+							"value": "2020-10-21T08:26:06.519Z",
+							"description": "",
+							"type": "text",
+							"enabled": true
+						},
+						{
+							"key": "duration[closed]",
+							"value": "2020-10-28T08:26:06.519Z",
+							"description": "",
+							"type": "text",
+							"enabled": true
+						}
+					],
+					"dataOptions": null,
+					"dataMode": "urlencoded",
+					"headerData": null,
+					"method": "PUT",
+					"pathVariableData": [],
+					"queryParams": [],
+					"auth": {
+						"type": "bearer",
+						"bearer": [
+							{
+								"key": "token",
+								"value": "{{access token}}"
+							},
+							{
+								"key": "password",
+								"value": "{{access token}}"
+							}
+						]
+					},
+					"events": null,
+					"folder": null,
+					"currentHelper": "bearerAuth",
+					"helperAttributes": {
+						"id": "bearer",
+						"token": "{{access token}}"
+					},
+					"collectionId": "861a0f06-d9ab-432b-a4ab-b99e7d2f8a8f",
+					"pathVariables": {}
+				},
+				{
+					"id": "fe4631a0-b345-4ab1-ab7a-b4040001269b",
+					"name": "Enroll Student",
+					"url": "http://localhost:3500/classes/08b483ef-f8d5-4d2c-910a-ee70db687309/enroll",
+					"description": "",
+					"data": [
+						{
+							"key": "userHash",
+							"value": "a6a7888e-ce89-4ef8-9263-68570b0e77fa",
+							"description": "",
+							"type": "text",
+							"enabled": true
+						}
+					],
+					"dataOptions": null,
+					"dataMode": "urlencoded",
+					"headerData": null,
+					"method": "POST",
+					"pathVariableData": [],
+					"queryParams": [],
+					"auth": {
+						"type": "bearer",
+						"bearer": [
+							{
+								"key": "token",
+								"value": "{{access token}}"
+							},
+							{
+								"key": "password",
+								"value": "{{access token}}"
+							}
+						]
+					},
+					"events": null,
+					"folder": null,
+					"currentHelper": "bearerAuth",
+					"helperAttributes": {
+						"id": "bearer",
+						"token": "{{access token}}"
+					},
+					"collectionId": "861a0f06-d9ab-432b-a4ab-b99e7d2f8a8f",
+					"pathVariables": {}
+				}
+			]
+		},
+		{
+			"id": "893e4482-055d-4e97-94e5-adcf6b43c92a",
+			"name": "User",
+			"description": null,
+			"auth": null,
+			"events": null,
+			"variables": [],
+			"order": [
+				"6eb65808-2ed2-41e1-9fb4-86cb7cada61d",
+				"fc062b6e-3806-4f3c-9faf-052905666ade",
+				"0fbadd22-ba09-4d50-86eb-1177a9752737",
+				"2a55b0c2-67d0-4dbc-afde-aa1ef658385e",
+				"8e6094ec-7f39-40ac-b536-eae85c8d2888"
+			],
+			"folders_order": [],
+			"protocolProfileBehavior": {},
+			"folders": [],
+			"requests": [
+				{
+					"id": "0fbadd22-ba09-4d50-86eb-1177a9752737",
+					"name": "Read One",
+					"url": "http://localhost:3500/users/lNhjOJRi-UaJJ-6ASi-xHns-Lx5xrMg9lPrE",
+					"description": "",
+					"data": [],
+					"dataOptions": null,
+					"dataMode": "urlencoded",
+					"headerData": null,
+					"method": "GET",
+					"pathVariableData": [],
+					"queryParams": [],
+					"auth": null,
+					"events": null,
+					"folder": null,
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"currentHelper": null,
+					"helperAttributes": null,
+					"collectionId": "893e4482-055d-4e97-94e5-adcf6b43c92a",
+					"pathVariables": {}
+				},
+				{
+					"id": "2a55b0c2-67d0-4dbc-afde-aa1ef658385e",
+					"name": "Update",
+					"url": "http://localhost:3500/users/lNhjOJRi-UaJJ-6ASi-xHns-Lx5xrMg9lPrE",
+					"description": "",
+					"data": [
+						{
+							"key": "name1",
+							"value": "Test name",
+							"description": "",
+							"type": "text",
+							"enabled": true
+						},
+						{
+							"key": "email",
+							"value": "test@test.com",
+							"description": "",
+							"type": "text",
+							"enabled": true
+						},
+						{
+							"key": "phone",
+							"value": "0636038298",
+							"description": "",
+							"type": "text",
+							"enabled": true
+						},
+						{
+							"key": "password",
+							"value": "pass123",
+							"description": "",
+							"type": "text",
+							"enabled": true
+						},
+						{
+							"key": "sex",
+							"value": "1",
+							"description": "",
+							"type": "text",
+							"enabled": false
+						}
+					],
+					"dataOptions": null,
+					"dataMode": "urlencoded",
+					"headerData": null,
+					"method": "PUT",
+					"pathVariableData": [],
+					"queryParams": [],
+					"auth": null,
+					"events": null,
+					"folder": null,
+					"currentHelper": null,
+					"helperAttributes": null,
+					"collectionId": "893e4482-055d-4e97-94e5-adcf6b43c92a",
+					"pathVariables": {}
+				},
+				{
+					"id": "6eb65808-2ed2-41e1-9fb4-86cb7cada61d",
+					"name": "Create",
+					"url": "http://localhost:3500/users",
+					"description": "",
+					"data": [
+						{
+							"key": "name",
+							"value": "Test name",
+							"description": "",
+							"type": "text",
+							"enabled": true
+						},
+						{
+							"key": "email",
+							"value": "test1@test.com",
+							"description": "",
+							"type": "text",
+							"enabled": true
+						},
+						{
+							"key": "phone",
+							"value": "0636038298",
+							"description": "",
+							"type": "text",
+							"enabled": true
+						},
+						{
+							"key": "password",
+							"value": "pass123",
+							"description": "",
+							"type": "text",
+							"enabled": true
+						},
+						{
+							"key": "sex",
+							"value": "m",
+							"description": "",
+							"type": "text",
+							"enabled": true
+						}
+					],
+					"dataOptions": null,
+					"dataMode": "urlencoded",
+					"headerData": null,
+					"method": "POST",
+					"pathVariableData": [],
+					"queryParams": [],
+					"auth": {
+						"type": "bearer",
+						"bearer": [
+							{
+								"key": "token",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJoYXNoIjoiYTZhNzg4OGUtY2U4OS00ZWY4LTkyNjMtNjg1NzBiMGU3N2ZhIiwicGFzc3dvcmQiOiJwYXNzMTIzIiwiaWF0IjoxNjAzMTIzMjQ2LCJleHAiOjE2MDMxMjMyNjA2MDIwOTYzMH0.bS_fYh83ugpDmFvggh2BF_bi4vnPMMo8nnipbvMWOQo"
+							}
+						]
+					},
+					"events": null,
+					"folder": null,
+					"currentHelper": "bearerAuth",
+					"helperAttributes": {
+						"id": "bearer",
+						"token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJoYXNoIjoiYTZhNzg4OGUtY2U4OS00ZWY4LTkyNjMtNjg1NzBiMGU3N2ZhIiwicGFzc3dvcmQiOiJwYXNzMTIzIiwiaWF0IjoxNjAzMTIzMjQ2LCJleHAiOjE2MDMxMjMyNjA2MDIwOTYzMH0.bS_fYh83ugpDmFvggh2BF_bi4vnPMMo8nnipbvMWOQo"
+					},
+					"collectionId": "893e4482-055d-4e97-94e5-adcf6b43c92a",
+					"pathVariables": {}
+				},
+				{
+					"id": "8e6094ec-7f39-40ac-b536-eae85c8d2888",
+					"name": "Delete",
+					"url": "http://localhost:3500/users/8d37d420-bdec-4d1f-bb08-5f5bcc8f7a79",
+					"description": "",
+					"data": [],
+					"dataOptions": null,
+					"dataMode": "urlencoded",
+					"headerData": null,
+					"method": "DELETE",
+					"pathVariableData": [],
+					"queryParams": [],
+					"auth": {
+						"type": "bearer",
+						"bearer": [
+							{
+								"key": "token",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJoYXNoIjoiYTZhNzg4OGUtY2U4OS00ZWY4LTkyNjMtNjg1NzBiMGU3N2ZhIiwicGFzc3dvcmQiOiJwYXNzMTIzIiwiaWF0IjoxNjAzMTIzMjQ2LCJleHAiOjE2MDMxMjMyNjA2MDIwOTYzMH0.bS_fYh83ugpDmFvggh2BF_bi4vnPMMo8nnipbvMWOQo"
+							}
+						]
+					},
+					"events": null,
+					"folder": null,
+					"currentHelper": "bearerAuth",
+					"helperAttributes": {
+						"id": "bearer",
+						"token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJoYXNoIjoiYTZhNzg4OGUtY2U4OS00ZWY4LTkyNjMtNjg1NzBiMGU3N2ZhIiwicGFzc3dvcmQiOiJwYXNzMTIzIiwiaWF0IjoxNjAzMTIzMjQ2LCJleHAiOjE2MDMxMjMyNjA2MDIwOTYzMH0.bS_fYh83ugpDmFvggh2BF_bi4vnPMMo8nnipbvMWOQo"
+					},
+					"collectionId": "893e4482-055d-4e97-94e5-adcf6b43c92a",
+					"pathVariables": {}
+				},
+				{
+					"id": "fc062b6e-3806-4f3c-9faf-052905666ade",
+					"name": "Read All",
+					"url": "http://localhost:3500/users?limit=10&page=0",
+					"description": "",
+					"data": [],
+					"dataOptions": null,
+					"dataMode": "urlencoded",
+					"headerData": null,
+					"method": "GET",
+					"pathVariableData": [],
+					"queryParams": [
+						{
+							"key": "limit",
+							"value": "10",
+							"equals": true,
+							"description": "",
+							"enabled": true
+						},
+						{
+							"key": "page",
+							"value": "0",
+							"equals": true,
+							"description": "",
+							"enabled": true
+						}
+					],
+					"auth": {
+						"type": "bearer",
+						"bearer": [
+							{
+								"key": "token",
+								"value": "{{access token}}"
+							}
+						]
+					},
+					"events": null,
+					"folder": null,
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"currentHelper": "bearerAuth",
+					"helperAttributes": {
+						"id": "bearer",
+						"token": "{{access token}}"
+					},
+					"collectionId": "893e4482-055d-4e97-94e5-adcf6b43c92a",
+					"pathVariables": {}
+				}
+			]
+		},
+		{
+			"id": "fa69dd34-ae50-48d0-abe2-39471536f4c2",
+			"name": "KeyNote",
+			"description": null,
+			"auth": null,
+			"events": null,
+			"variables": [],
+			"order": [
+				"5f1be80a-2b4f-4f6b-aec6-af84bb8a3e89",
+				"8815a720-7398-456b-8024-022c3dd056a5",
+				"73f1786a-ab18-4975-9707-e8be4179bf25",
+				"fb17497e-771d-4fa3-a6f4-3d5a8994c706",
+				"cdd32578-3281-4464-9370-5358f0a8920d"
+			],
+			"folders_order": [],
+			"protocolProfileBehavior": {},
+			"folders": [],
+			"requests": [
+				{
+					"id": "5f1be80a-2b4f-4f6b-aec6-af84bb8a3e89",
+					"name": "Create",
+					"url": "http://localhost:3500/keynotes",
+					"description": "",
+					"data": [
+						{
+							"key": "title",
+							"value": "Test key note title",
+							"description": "",
+							"type": "text",
+							"enabled": true
+						},
+						{
+							"key": "order",
+							"value": "8",
+							"description": "",
+							"type": "text",
+							"enabled": true
+						},
+						{
+							"key": "uri",
+							"value": "https://education-nestjs-final-project-docs-mzzz.dev.alldigitalads.com/school/docs/#/",
+							"description": "",
+							"type": "text",
+							"enabled": true
+						}
+					],
+					"dataOptions": null,
+					"dataMode": "urlencoded",
+					"headerData": null,
+					"method": "POST",
+					"pathVariableData": [],
+					"queryParams": [],
+					"auth": {
+						"type": "bearer",
+						"bearer": [
+							{
+								"key": "token",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJoYXNoIjoiYTZhNzg4OGUtY2U4OS00ZWY4LTkyNjMtNjg1NzBiMGU3N2ZhIiwicGFzc3dvcmQiOiJwYXNzMTIzIiwiaWF0IjoxNjAzMTIzMjQ2LCJleHAiOjE2MDMxMjMyNjA2MDIwOTYzMH0.bS_fYh83ugpDmFvggh2BF_bi4vnPMMo8nnipbvMWOQo"
+							}
+						]
+					},
+					"events": null,
+					"folder": null,
+					"currentHelper": "bearerAuth",
+					"helperAttributes": {
+						"id": "bearer",
+						"token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJoYXNoIjoiYTZhNzg4OGUtY2U4OS00ZWY4LTkyNjMtNjg1NzBiMGU3N2ZhIiwicGFzc3dvcmQiOiJwYXNzMTIzIiwiaWF0IjoxNjAzMTIzMjQ2LCJleHAiOjE2MDMxMjMyNjA2MDIwOTYzMH0.bS_fYh83ugpDmFvggh2BF_bi4vnPMMo8nnipbvMWOQo"
+					},
+					"collectionId": "fa69dd34-ae50-48d0-abe2-39471536f4c2",
+					"pathVariables": {}
+				},
+				{
+					"id": "73f1786a-ab18-4975-9707-e8be4179bf25",
+					"name": "Read One",
+					"url": "http://localhost:3500/keynotes/d2515c48-3368-4452-8b66-fafe6c43cf54",
+					"description": "",
+					"data": [],
+					"dataOptions": null,
+					"dataMode": "urlencoded",
+					"headerData": null,
+					"method": "GET",
+					"pathVariableData": [],
+					"queryParams": [],
+					"auth": {
+						"type": "bearer",
+						"bearer": [
+							{
+								"key": "token",
+								"value": "{{access token}}"
+							}
+						]
+					},
+					"events": null,
+					"folder": null,
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"currentHelper": "bearerAuth",
+					"helperAttributes": {
+						"id": "bearer",
+						"token": "{{access token}}"
+					},
+					"collectionId": "fa69dd34-ae50-48d0-abe2-39471536f4c2",
+					"pathVariables": {}
+				},
+				{
+					"id": "8815a720-7398-456b-8024-022c3dd056a5",
+					"name": "Read All",
+					"url": "http://localhost:3500/keynotes?limit=10&page=0",
+					"description": "",
+					"data": [],
+					"dataOptions": null,
+					"dataMode": "urlencoded",
+					"headerData": null,
+					"method": "GET",
+					"pathVariableData": [],
+					"queryParams": [
+						{
+							"key": "limit",
+							"value": "10",
+							"equals": true,
+							"description": "",
+							"enabled": true
+						},
+						{
+							"key": "page",
+							"value": "0",
+							"equals": true,
+							"description": "",
+							"enabled": true
+						}
+					],
+					"auth": {
+						"type": "bearer",
+						"bearer": [
+							{
+								"key": "token",
+								"value": "{{access token}}"
+							}
+						]
+					},
+					"events": null,
+					"folder": null,
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"currentHelper": "bearerAuth",
+					"helperAttributes": {
+						"id": "bearer",
+						"token": "{{access token}}"
+					},
+					"collectionId": "fa69dd34-ae50-48d0-abe2-39471536f4c2",
+					"pathVariables": {}
+				},
+				{
+					"id": "cdd32578-3281-4464-9370-5358f0a8920d",
+					"name": "Delete",
+					"url": "http://localhost:3500/keynotes/1a950f1d-6eb1-4aac-99c6-e416c6f1dc16",
+					"description": "",
+					"data": [],
+					"dataOptions": null,
+					"dataMode": "urlencoded",
+					"headerData": null,
+					"method": "DELETE",
+					"pathVariableData": [],
+					"queryParams": [],
+					"auth": {
+						"type": "bearer",
+						"bearer": [
+							{
+								"key": "token",
+								"value": "{{access token}}"
+							}
+						]
+					},
+					"events": null,
+					"folder": null,
+					"currentHelper": "bearerAuth",
+					"helperAttributes": {
+						"id": "bearer",
+						"token": "{{access token}}"
+					},
+					"collectionId": "fa69dd34-ae50-48d0-abe2-39471536f4c2",
+					"pathVariables": {}
+				},
+				{
+					"id": "fb17497e-771d-4fa3-a6f4-3d5a8994c706",
+					"name": "Update",
+					"url": "http://localhost:3500/keynotes/d2515c48-3368-4452-8b66-fafe6c43cf54",
+					"description": "",
+					"data": [
+						{
+							"key": "title",
+							"value": "Test key note title #1",
+							"description": "",
+							"type": "text",
+							"enabled": true
+						},
+						{
+							"key": "order",
+							"value": "9",
+							"description": "",
+							"type": "text",
+							"enabled": true
+						},
+						{
+							"key": "uri",
+							"value": "https://education-nestjs-final-project-docs-mzzz.dev.alldigitalads.com/school/docs/#/",
+							"description": "",
+							"type": "text",
+							"enabled": true
+						}
+					],
+					"dataOptions": null,
+					"dataMode": "urlencoded",
+					"headerData": null,
+					"method": "PUT",
+					"pathVariableData": [],
+					"queryParams": [],
+					"auth": {
+						"type": "bearer",
+						"bearer": [
+							{
+								"key": "token",
+								"value": "{{access token}}"
+							}
+						]
+					},
+					"events": null,
+					"folder": null,
+					"currentHelper": "bearerAuth",
+					"helperAttributes": {
+						"id": "bearer",
+						"token": "{{access token}}"
+					},
+					"collectionId": "fa69dd34-ae50-48d0-abe2-39471536f4c2",
+					"pathVariables": {}
+				}
+			]
+		}
+	],
+	"environments": [
+		{
+			"id": "b2fc138a-1f52-407a-8c61-0cef27c2417c",
+			"name": "My Workspace - globals",
+			"values": [
+				{
+					"key": "access token",
+					"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJoYXNoIjoiYTZhNzg4OGUtY2U4OS00ZWY4LTkyNjMtNjg1NzBiMGU3N2ZhIiwicGFzc3dvcmQiOiJwYXNzMTIzIiwiaWF0IjoxNjAzMzg3NjI5LCJleHAiOjE2MDMzODc2Mzk3MzE3NDAwMH0.ha148CxJz0qSTVL3HkefeQcE6jFMn59sxFuiKKQc18s",
+					"enabled": true
+				}
+			]
+		}
+	],
+	"headerPresets": [],
+	"globals": []
+}

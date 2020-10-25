@@ -12,14 +12,16 @@ import {AuthModule} from "./auth/auth.module";
 import {AuthService} from "./auth/auth.service";
 import {ClassModule} from "./classes/classes.module";
 import {ContentModule} from "./content/content.module";
+import {LessonsModule} from "./lessons/lessons.module";
 
 @Module({
   imports: [
     DatabaseModule,
     ConfigModule.forRoot(),
-    UsersModule,
     AuthModule,
+    UsersModule,
     ClassModule,
+    LessonsModule,
     ContentModule,
     TypeOrmModule.forRoot({
       type: 'postgres',
@@ -32,7 +34,7 @@ import {ContentModule} from "./content/content.module";
       synchronize: true,
     }),
   ],
-  controllers: [AppController, LessonsController, AuthController],
+  controllers: [AppController, AuthController],
   providers: [AppService, AuthService,
     {
       provide: APP_PIPE,

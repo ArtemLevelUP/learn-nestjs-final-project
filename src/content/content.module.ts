@@ -6,10 +6,11 @@ import { KeyNotesService} from "./keyNotes.service";
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { Video } from "./entities/video.entity";
 import { KeyNote } from "./entities/keyNote.entity";
+import {Lesson} from "../lessons/entities/lesson.entity";
 
 @Module({
     imports: [
-        TypeOrmModule.forFeature([Video, KeyNote]),
+        TypeOrmModule.forFeature([Video, KeyNote, Lesson]),
     ],
     controllers: [VideosController, KeyNotesController],
     providers: [VideosService, KeyNotesService],

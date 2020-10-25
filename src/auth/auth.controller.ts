@@ -6,7 +6,7 @@ import {
     ApiBadRequestResponse,
     ApiBearerAuth,
     ApiInternalServerErrorResponse,
-    ApiOkResponse,
+    ApiOkResponse, ApiParam, ApiProperty,
     ApiTags
 } from "@nestjs/swagger";
 
@@ -16,10 +16,11 @@ export class AuthController {
     constructor(private readonly authService: AuthService) {}
 
     @Post('/login')
-    @ApiOkResponse({ description: 'JSON with accessToken and expiresIn', type: 'text/json', schema: {type: 'object', properties: { accessToken: { type: 'string' }, expiresIn: { type: 'date'}}}})
-    @ApiBadRequestResponse({ description: 'incorrect payload', type: 'text/json', schema: {type: 'object', properties: { message: { type: 'string' }}}})
-    @ApiInternalServerErrorResponse({ description: 'some server error'})
-    @HttpCode(HttpStatus.OK)
+    // @ApiOkResponse({ description: 'JSON with accessToken and expiresIn', type: 'text/json', schema: {type: 'object', properties: { accessToken: { type: 'string' }, expiresIn: { type: 'date'}}}})
+    // @ApiBadRequestResponse({ description: 'incorrect payload', type: 'text/json', schema: {type: 'object', properties: { message: { type: 'string' }}}})
+    // @ApiInternalServerErrorResponse({ description: 'some server error'})
+    @ApiParam({name:'auth', type: 'string', description: 'base64 string concatenated email + : + password', example: 'Base amRvZUBlbWFpbC5jb206MTIzNDU2' })
+    @HttpCode(HttpStatus.NO_CONTENT)
     login(@Body() body, @Res() res: Response) {
         return this.authService.login(body, res);
     }

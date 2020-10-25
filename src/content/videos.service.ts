@@ -26,15 +26,12 @@ export class VideosService extends AbstractContentService {
             throw new NotFoundException(`Video with hash: ${hash} not found`);
         }
 
-        video.title = updateVideoDto.title;
-        video.order = updateVideoDto.order;
-        video.uri = updateVideoDto.uri;
-        // const videoPreload = await this.repository.preload({
-        //     hash: video.hash,
-        //     ...updateVideoDto,
-        // });
+        const videoPreload = await this.repository.preload({
+            id: video.id,
+            hash: video.hash,
+            ...updateVideoDto,
+        });
 
-        // return this.repository.save(videoPreload);
-        return this.repository.save(video);
+        return this.repository.save(videoPreload);
     }
 }

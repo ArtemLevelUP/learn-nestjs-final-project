@@ -25,17 +25,12 @@ export class KeyNotesService extends AbstractContentService {
         if (!keyNote) {
             throw new NotFoundException(`KeyNote with hash: ${hash} not found`);
         }
-        // const videoPreload = await this.repository.preload({
-        //     id: keyNote.id,
-        //     ...updateKeyNoteDto,
-        // });
-        //
-        // return this.repository.save(videoPreload);
+        const keyNotePreload = await this.repository.preload({
+            id: keyNote.id,
+            hash: keyNote.hash,
+            ...updateKeyNoteDto,
+        });
 
-        keyNote.title = updateKeyNoteDto.title;
-        keyNote.order = updateKeyNoteDto.order;
-        keyNote.uri = updateKeyNoteDto.uri;
-
-        return this.repository.save(keyNote);
+        return this.repository.save(keyNotePreload);
     }
 }

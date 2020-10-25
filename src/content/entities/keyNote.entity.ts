@@ -1,7 +1,8 @@
 import {AbstractContentEntity} from "./abstract.content.entity";
-import {Column, Entity, ManyToMany} from "typeorm";
+import {Column, Entity, JoinTable, ManyToMany} from "typeorm";
 import {ApiProperty} from "@nestjs/swagger";
 import {Lesson} from "../../lessons/entities/lesson.entity";
+import "reflect-metadata";
 
 @Entity()
 export class KeyNote extends AbstractContentEntity {
