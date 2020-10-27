@@ -1,0 +1,19 @@
+type: object
+required:
+  - title
+  - order
+  - uri
+properties:
+  hash:
+    type: string
+    example: keynoteHash
+  title:
+    type: string
+    example: Node.js architecture
+  order:
+    type: integer
+    minimum: 1
+    example: 1
+  uri:
+    type: string
+    example: https://lectrum.io/keynotes/lesson-1

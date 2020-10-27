@@ -1,0 +1,9 @@
+description: 'Доступ запрещён'
+content:
+  application/json:
+    schema:
+      type: object
+      properties:
+        message:
+          type: string
+          example: 'not allowed'

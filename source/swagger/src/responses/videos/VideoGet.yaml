@@ -1,0 +1,10 @@
+description: 'Получено видео с помощью hash'
+content:
+  application/json:
+    schema:
+      type: object
+      required:
+        - data
+      properties:
+        data:
+          $ref: './_Video.yaml'

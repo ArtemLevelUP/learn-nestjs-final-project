@@ -1,0 +1,10 @@
+description: 'Презентация успешно обновлена'
+content:
+  application/json:
+    schema:
+      type: object
+      required:
+        - data
+      properties:
+        data:
+          $ref: './_Keynote.yaml'

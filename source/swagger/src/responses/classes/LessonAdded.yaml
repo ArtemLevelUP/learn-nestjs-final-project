@@ -1,0 +1,9 @@
+description: 'Урок успешно добавлен к потоку'
+content:
+  application/json:
+    schema:
+      type: object
+      properties:
+        hash:
+          type: string
+          example: '10ba038e-48da-487b-96e8-8d3b99b6d18a'

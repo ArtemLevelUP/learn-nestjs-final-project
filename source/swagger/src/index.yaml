@@ -1,0 +1,1050 @@
+openapi: 3.0.2
+info:
+  version: 0.0.1
+  title: Nest.js Fundamentals Final Project Docs
+  description: >-
+    Nest.js Fundamentals Final Project Docs
+tags:
+  - name: Auth
+    description: Эндпоинты для аутентификации и авторизации
+  - name: Users
+    description: Эндпоинты для управления пользователями
+  - name: Classes
+    description: Эндпоинты для управления потоками
+  - name: Lessons
+    description: Эндпоинты для управления уроками
+  - name: Videos
+    description: Эндпоинты для управления видео
+  - name: Keynotes
+    description: Эндпоинты для управления презентациями
+servers:
+  - url: 'http://localhost:5000'
+paths:
+  /login:
+    post:
+      summary: Залогинить пользователя
+      description: Эндпоинт используется для логина пользователя. После успешного логина необходимо в куки клиента записать идентификатор токена, который будет автоматически подкладываться во все последующие запросы.
+      tags:
+        - Auth
+      parameters:
+        - name: auth
+          in: header
+          required: true
+          description: 'base64 string concatenated email + : + password'
+          schema:
+            example: Base amRvZUBlbWFpbC5jb206MTIzNDU2
+            type: string
+      responses:
+        '204':
+          description:
+            Успешно установлена куки которая ответчает за авторизацию пользователя
+          headers:
+            Set-Cookie:
+              schema:
+                type: string
+                example: USERSESSIONID=abcde12345; Path=/;
+        400:
+          $ref: '#/components/responses/BadRequest'
+        500:
+          $ref: '#/components/responses/ServerError'
+  /logout:
+    post:
+      summary: Разлогинить пользователя
+      description: Эндпоинт используется для разлогина пользователя. В случае успешной операции необходимо удалить идентификатор токена из кук клиента, а также очистить токен из хранилища.
+      security:
+        - CookieAuth: []
+      tags:
+        - Auth
+      responses:
+        204:
+          $ref: '#/components/responses/NoContent'
+        401:
+          $ref: '#/components/responses/NotAuthenticated'
+        400:
+          $ref: '#/components/responses/BadRequest'
+        500:
+          $ref: '#/components/responses/ServerError'
+  /users:
+    get:
+      summary: Получить пользователей
+      description: Эндпоинт используется для получения всех пользователей
+      tags:
+        - Users
+      security:
+        - CookieAuth: []
+      parameters:
+        - in: query
+          name: limit
+          required: true
+          schema:
+            type: integer
+            minimum: 1
+            maximum: 50
+            example: 15
+            default: 10
+          description: Ограничивате количество элементов в выборке
+        - in: query
+          name: page
+          required: true
+          schema:
+            type: integer
+            minimum: 1
+            example: 1
+            default: 1
+          description: Указывает на страницу
+      responses:
+        200:
+          $ref: '#/components/responses/UsersGet'
+        400:
+          $ref: '#/components/responses/BadRequest'
+        500:
+          $ref: '#/components/responses/ServerError'
+    post:
+      summary: Создать пользователя
+      description: Эндпоинт используется для создания пользователя. Необязательное условие состоит в том чтобы добавить проверку на уникальность email.
+      tags:
+        - Users
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/User'
+      responses:
+        201:
+          $ref: '#/components/responses/UserCreated'
+        400:
+          $ref: '#/components/responses/BadRequest'
+        500:
+          $ref: '#/components/responses/ServerError'
+  /users/{userHash}:
+    get:
+      summary: Получить пользователя по hash
+      description: Эндпоинт используется для получения конкретного пользователя по его **hash**
+      tags:
+        - Users
+      security:
+        - CookieAuth: []
+      parameters:
+        - in: path
+          name: userHash
+          schema:
+            type: string
+          required: true
+          description: Хеш пользователя
+      responses:
+        200:
+          $ref: '#/components/responses/UserGet'
+        400:
+          $ref: '#/components/responses/BadRequest'
+        500:
+          $ref: '#/components/responses/ServerError'
+    put:
+      summary: Обновить пользователя
+      description: Эндпоинт используется для обновления пользователя по его **hash**
+      tags:
+        - Users
+      security:
+        - CookieAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/User'
+      parameters:
+        - in: path
+          name: userHash
+          schema:
+            type: string
+          required: true
+          description: Хеш пользователя
+      responses:
+        200:
+          $ref: '#/components/responses/UserUpdated'
+        400:
+          $ref: '#/components/responses/BadRequest'
+        500:
+          $ref: '#/components/responses/ServerError'
+    delete:
+      summary: Удалить пользователя
+      description: Эндпоинт используется для удаления пользователя по его **hash**
+      tags:
+        - Users
+      security:
+        - CookieAuth: []
+      parameters:
+        - in: path
+          name: userHash
+          schema:
+            type: string
+          required: true
+          description: Хеш пользователя
+      responses:
+        204:
+          $ref: '#/components/responses/NoContent'
+        400:
+          $ref: '#/components/responses/BadRequest'
+        500:
+          $ref: '#/components/responses/ServerError'
+  /classes:
+    get:
+      summary: Получить потоки
+      description: Эндпоинт используется получения всех потоков
+      tags:
+        - Classes
+      security:
+        - CookieAuth: []
+      parameters:
+        - in: query
+          name: limit
+          required: true
+          schema:
+            type: integer
+            minimum: 1
+            maximum: 50
+            example: 15
+            default: 10
+          description: Ограничивате количество элементов в выборке
+        - in: query
+          name: page
+          required: true
+          schema:
+            type: integer
+            minimum: 1
+            example: 1
+            default: 1
+          description: Указывает на страницу
+      responses:
+        200:
+          $ref: '#/components/responses/ClassesGet'
+        400:
+          $ref: '#/components/responses/BadRequest'
+        500:
+          $ref: '#/components/responses/ServerError'
+    post:
+      summary: Создать поток
+      description: Эндпоинт используется для создания потока
+      tags:
+        - Classes
+      security:
+        - CookieAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Class'
+      responses:
+        201:
+          $ref: '#/components/responses/ClassCreated'
+        400:
+          $ref: '#/components/responses/BadRequest'
+        500:
+          $ref: '#/components/responses/ServerError'
+  /classes/{classHash}:
+    get:
+      summary: Получить поток по hash
+      description: Эндпоинт используется получения потока по его **hash**
+      tags:
+        - Classes
+      security:
+        - CookieAuth: []
+      parameters:
+        - in: path
+          name: classHash
+          schema:
+            type: string
+          required: true
+          description: Хеш потока
+      responses:
+        200:
+          $ref: '#/components/responses/ClassGet'
+        400:
+          $ref: '#/components/responses/BadRequest'
+        500:
+          $ref: '#/components/responses/ServerError'
+    put:
+      summary: Обновить поток
+      description: Эндпоинт используется для обновления потока по его **hash**
+      tags:
+        - Classes
+      security:
+        - CookieAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Class'
+      parameters:
+        - in: path
+          name: classHash
+          schema:
+            type: string
+          required: true
+          description: Хеш потока
+      responses:
+        200:
+          $ref: '#/components/responses/ClassUpdated'
+        400:
+          $ref: '#/components/responses/BadRequest'
+        500:
+          $ref: '#/components/responses/ServerError'
+    delete:
+      summary: Удалить поток
+      description: Эндпоинт используется для удаления потока по его **hash**
+      tags:
+        - Classes
+      security:
+        - CookieAuth: []
+      parameters:
+        - in: path
+          name: classHash
+          schema:
+            type: string
+          required: true
+          description: Хеш потока
+      responses:
+        204:
+          $ref: '#/components/responses/NoContent'
+        400:
+          $ref: '#/components/responses/BadRequest'
+        500:
+          $ref: '#/components/responses/ServerError'
+  /classes/{classHash}/lessons:
+    post:
+      summary: Добавить урок к потоку
+      description: Эндпоинт используется для добавления урока к потоку.
+      tags:
+        - Classes
+      security:
+        - CookieAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ClassAddLesson'
+      parameters:
+        - in: path
+          name: classHash
+          schema:
+            type: string
+          required: true
+          description: Хеш потока
+      responses:
+        201:
+          $ref: '#/components/responses/LessonAdded'
+        400:
+          $ref: '#/components/responses/BadRequest'
+        500:
+          $ref: '#/components/responses/ServerError'
+  /classes/{classHash}/lessons/{lessonHash}:
+    delete:
+      summary: Удалить урок с потока
+      description: Эндпоинт используется для удаления урока с потока.
+      tags:
+        - Classes
+      security:
+        - CookieAuth: []
+      parameters:
+        - in: path
+          name: classHash
+          schema:
+            type: string
+          required: true
+          description: Хеш потока
+        - in: path
+          name: lessonHash
+          schema:
+            type: string
+          required: true
+          description: Хеш урока
+      responses:
+        204:
+          $ref: '#/components/responses/NoContent'
+        400:
+          $ref: '#/components/responses/BadRequest'
+        500:
+          $ref: '#/components/responses/ServerError'
+  /classes/{classHash}/enroll:
+    post:
+      summary: Зачислить студента на поток
+      description: Эндпоинт используется для зачисления студента на поток
+      tags:
+        - Classes
+      security:
+        - CookieAuth: [ ]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/StudentEnroll'
+      parameters:
+        - in: path
+          name: classHash
+          schema:
+            type: string
+          required: true
+          description: Хеш потока
+      responses:
+        204:
+          $ref: '#/components/responses/NoContent'
+        400:
+          $ref: '#/components/responses/BadRequest'
+        500:
+          $ref: '#/components/responses/ServerError'
+  /classes/{classHash}/expel:
+    post:
+      summary: Отчислить студента с потока
+      description: Эндпоинт используется для отчисления студента с потока
+      tags:
+        - Classes
+      security:
+        - CookieAuth: [ ]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/StudentExpel'
+      parameters:
+        - in: path
+          name: classHash
+          schema:
+            type: string
+          required: true
+          description: Хеш потока
+      responses:
+        204:
+          $ref: '#/components/responses/NoContent'
+        400:
+          $ref: '#/components/responses/BadRequest'
+        500:
+          $ref: '#/components/responses/ServerError'
+  /lessons:
+    get:
+      summary: Получить уроки
+      description: Эндпоинт используется получения всех уроков
+      tags:
+        - Lessons
+      security:
+        - CookieAuth: []
+      parameters:
+        - in: query
+          name: limit
+          required: true
+          schema:
+            type: integer
+            minimum: 1
+            maximum: 50
+            example: 15
+            default: 10
+          description: Ограничивате количество элементов в выборке
+        - in: query
+          name: page
+          required: true
+          schema:
+            type: integer
+            minimum: 1
+            example: 1
+            default: 1
+          description: Указывает на страницу
+      responses:
+        200:
+          $ref: '#/components/responses/LessonsGet'
+        400:
+          $ref: '#/components/responses/BadRequest'
+        500:
+          $ref: '#/components/responses/ServerError'
+    post:
+      summary: Создать урок
+      description: Эндпоинт используется для создания урока
+      tags:
+        - Lessons
+      security:
+        - CookieAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Lesson'
+      responses:
+        201:
+          $ref: '#/components/responses/LessonCreated'
+        400:
+          $ref: '#/components/responses/BadRequest'
+        500:
+          $ref: '#/components/responses/ServerError'
+  /lessons/{lessonHash}:
+    get:
+      summary: Получить урок по hash
+      description: Эндпоинт используется получения урока по его **hash**
+      tags:
+        - Lessons
+      security:
+        - CookieAuth: []
+      parameters:
+        - in: path
+          name: lessonHash
+          schema:
+            type: string
+          required: true
+          description: Хеш урока
+      responses:
+        200:
+          $ref: '#/components/responses/LessonGet'
+        400:
+          $ref: '#/components/responses/BadRequest'
+        500:
+          $ref: '#/components/responses/ServerError'
+    put:
+      summary: Обновить урок
+      description: Эндпоинт используется для обновления урока по его **hash**
+      tags:
+        - Lessons
+      security:
+        - CookieAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Lesson'
+      parameters:
+        - in: path
+          name: lessonHash
+          schema:
+            type: string
+          required: true
+          description: Хеш урока
+      responses:
+        200:
+          $ref: '#/components/responses/LessonUpdated'
+        400:
+          $ref: '#/components/responses/BadRequest'
+        500:
+          $ref: '#/components/responses/ServerError'
+    delete:
+      summary: Удалить урок
+      description: Эндпоинт используется для удаления урока по его **hash**
+      tags:
+        - Lessons
+      security:
+        - CookieAuth: []
+      parameters:
+        - in: path
+          name: lessonHash
+          schema:
+            type: string
+          required: true
+          description: Хеш урока
+      responses:
+        204:
+          $ref: '#/components/responses/NoContent'
+        400:
+          $ref: '#/components/responses/BadRequest'
+        500:
+          $ref: '#/components/responses/ServerError'
+  /lessons/{lessonHash}/videos:
+    post:
+      summary: Добавить видео к уроку
+      description: Эндпоинт используется для добавления видео к уроку
+      tags:
+        - Lessons
+      security:
+        - CookieAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/LessonsAddVideo'
+      parameters:
+        - in: path
+          name: lessonHash
+          schema:
+            type: string
+          required: true
+          description: Хеш урока
+      responses:
+        204:
+          $ref: '#/components/responses/NoContent'
+        400:
+          $ref: '#/components/responses/BadRequest'
+        500:
+          $ref: '#/components/responses/ServerError'
+  /lessons/{lessonHash}/keynotes:
+    post:
+      summary: Добавить презентацию к уроку
+      description: Эндпоинт используется для добавления презентации к уроку
+      tags:
+        - Lessons
+      security:
+        - CookieAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/LessonsAddKeynote'
+      parameters:
+        - in: path
+          name: lessonHash
+          schema:
+            type: string
+          required: true
+          description: Хеш урока
+      responses:
+        204:
+          $ref: '#/components/responses/NoContent'
+        400:
+          $ref: '#/components/responses/BadRequest'
+        500:
+          $ref: '#/components/responses/ServerError'
+  /lessons/{lessonHash}/videos/{videoHash}:
+    get:
+      summary: Получить видео по уроку
+      description: Эндпоинт используется для получения видео по уроку
+      tags:
+        - Lessons
+      security:
+        - CookieAuth: []
+      parameters:
+        - in: path
+          name: lessonHash
+          schema:
+            type: string
+          required: true
+          description: Хеш урока
+        - in: path
+          name: videoHash
+          schema:
+            type: string
+          required: true
+          description: Хеш видео
+      responses:
+        200:
+          $ref: '#/components/responses/VideoGet'
+        400:
+          $ref: '#/components/responses/BadRequest'
+        500:
+          $ref: '#/components/responses/ServerError'
+    delete:
+      summary: Удалить видео из урока
+      description: Эндпоинт используется для удаления видео из урока
+      tags:
+        - Lessons
+      security:
+        - CookieAuth: []
+      parameters:
+        - in: path
+          name: lessonHash
+          schema:
+            type: string
+          required: true
+          description: Хеш урока
+        - in: path
+          name: videoHash
+          schema:
+            type: string
+          required: true
+          description: Хеш видео
+      responses:
+        204:
+          $ref: '#/components/responses/NoContent'
+        400:
+          $ref: '#/components/responses/BadRequest'
+        500:
+          $ref: '#/components/responses/ServerError'
+  /lessons/{lessonHash}/keynotes/{keynoteHash}:
+    get:
+      summary: Получить презентацию по уроку
+      description: Эндпоинт используется для получения презентации по уроку
+      tags:
+        - Lessons
+      security:
+        - CookieAuth: []
+      parameters:
+        - in: path
+          name: lessonHash
+          schema:
+            type: string
+          required: true
+          description: Хеш урока
+        - in: path
+          name: keynoteHash
+          schema:
+            type: string
+          required: true
+          description: Хеш презентации
+      responses:
+        200:
+          $ref: '#/components/responses/KeynoteGet'
+        400:
+          $ref: '#/components/responses/BadRequest'
+        500:
+          $ref: '#/components/responses/ServerError'
+    delete:
+      summary: Удалить презентацию из урока
+      description: Эндпоинт используется для удаления презентации из урока
+      tags:
+        - Lessons
+      security:
+        - CookieAuth: []
+      parameters:
+        - in: path
+          name: lessonHash
+          schema:
+            type: string
+          required: true
+          description: Хеш урока
+        - in: path
+          name: keynoteHash
+          schema:
+            type: string
+          required: true
+          description: Хеш презентации
+      responses:
+        204:
+          $ref: '#/components/responses/NoContent'
+        400:
+          $ref: '#/components/responses/BadRequest'
+        500:
+          $ref: '#/components/responses/ServerError'
+  /videos:
+    get:
+      summary: Получить все видео
+      description: Эндпоинт используется для получения всех видео
+      tags:
+        - Videos
+      security:
+        - CookieAuth: []
+      parameters:
+        - in: query
+          name: limit
+          required: true
+          schema:
+            type: integer
+            minimum: 1
+            maximum: 50
+            example: 15
+            default: 10
+          description: Ограничивате количество элементов в выборке
+        - in: query
+          name: page
+          required: true
+          schema:
+            type: integer
+            minimum: 1
+            example: 1
+            default: 1
+          description: Указывает на страницу
+      responses:
+        200:
+          $ref: '#/components/responses/VideosGet'
+        400:
+          $ref: '#/components/responses/BadRequest'
+        500:
+          $ref: '#/components/responses/ServerError'
+    post:
+      summary: Создать видео
+      description: Эндпоинт используется для создания видео.
+      tags:
+        - Videos
+      security:
+        - CookieAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Video'
+      responses:
+        201:
+          $ref: '#/components/responses/VideoCreated'
+        400:
+          $ref: '#/components/responses/BadRequest'
+        500:
+          $ref: '#/components/responses/ServerError'
+  /videos/{videoHash}:
+    get:
+      summary: Получить видео по hash
+      description: Эндпоинт используется для получения конкретного видео по его **hash**
+      tags:
+        - Videos
+      security:
+        - CookieAuth: []
+      parameters:
+        - in: path
+          name: videoHash
+          schema:
+            type: string
+          required: true
+          description: Хеш видео
+      responses:
+        200:
+          $ref: '#/components/responses/VideoGet'
+        400:
+          $ref: '#/components/responses/BadRequest'
+        500:
+          $ref: '#/components/responses/ServerError'
+    put:
+      summary: Обновить видео
+      description: Эндпоинт используется для обновления видео по его **hash**
+      tags:
+        - Videos
+      security:
+        - CookieAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Video'
+      parameters:
+        - in: path
+          name: videoHash
+          schema:
+            type: string
+          required: true
+          description: Хеш видео
+      responses:
+        200:
+          $ref: '#/components/responses/VideoUpdated'
+        400:
+          $ref: '#/components/responses/BadRequest'
+        500:
+          $ref: '#/components/responses/ServerError'
+    delete:
+      summary: Удалить видео
+      description: Эндпоинт используется для удаления видео по его **hash**
+      tags:
+        - Videos
+      security:
+        - CookieAuth: []
+      parameters:
+        - in: path
+          name: videoHash
+          schema:
+            type: string
+          required: true
+          description: Хеш видео
+      responses:
+        204:
+          $ref: '#/components/responses/NoContent'
+        400:
+          $ref: '#/components/responses/BadRequest'
+        500:
+          $ref: '#/components/responses/ServerError'
+  /keynotes:
+    get:
+      summary: Получить все презентации
+      description: Эндпоинт используется для получения всех презентаций
+      tags:
+        - Keynotes
+      security:
+        - CookieAuth: []
+      parameters:
+        - in: query
+          name: limit
+          required: true
+          schema:
+            type: integer
+            minimum: 1
+            maximum: 50
+            example: 15
+            default: 10
+          description: Ограничивате количество элементов в выборке
+        - in: query
+          name: page
+          required: true
+          schema:
+            type: integer
+            minimum: 1
+            example: 1
+            default: 1
+          description: Указывает на страницу
+      responses:
+        200:
+          $ref: '#/components/responses/KeynotesGet'
+        400:
+          $ref: '#/components/responses/BadRequest'
+        500:
+          $ref: '#/components/responses/ServerError'
+    post:
+      summary: Создать презентацию
+      description: Эндпоинт используется для создания презентаций.
+      tags:
+        - Keynotes
+      security:
+        - CookieAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Keynote'
+      responses:
+        201:
+          $ref: '#/components/responses/KeynoteCreated'
+        400:
+          $ref: '#/components/responses/BadRequest'
+        500:
+          $ref: '#/components/responses/ServerError'
+  /keynotes/{keynoteHash}:
+    get:
+      summary: Получить презентацию по hash
+      description: Эндпоинт используется для получения конкретной презентации с помощью **hash**
+      tags:
+        - Keynotes
+      security:
+        - CookieAuth: []
+      parameters:
+        - in: path
+          name: keynoteHash
+          schema:
+            type: string
+          required: true
+          description: Хеш презентации
+      responses:
+        200:
+          $ref: '#/components/responses/KeynoteGet'
+        400:
+          $ref: '#/components/responses/BadRequest'
+        500:
+          $ref: '#/components/responses/ServerError'
+    put:
+      summary: Обновить презентацию
+      description: Эндпоинт используется для обновления презентации с помощью **hash**
+      tags:
+        - Keynotes
+      security:
+        - CookieAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Keynote'
+      parameters:
+        - in: path
+          name: keynoteHash
+          schema:
+            type: string
+          required: true
+          description: Хеш презентации
+      responses:
+        200:
+          $ref: '#/components/responses/KeynoteUpdated'
+        400:
+          $ref: '#/components/responses/BadRequest'
+        500:
+          $ref: '#/components/responses/ServerError'
+    delete:
+      summary: Удалить презентацию
+      description: Эндпоинт используется для удаления презентации с помощью **hash**
+      tags:
+        - Keynotes
+      security:
+        - CookieAuth: []
+      parameters:
+        - in: path
+          name: keynoteHash
+          schema:
+            type: string
+          required: true
+          description: Хеш презентации
+      responses:
+        204:
+          $ref: '#/components/responses/NoContent'
+        400:
+          $ref: '#/components/responses/BadRequest'
+        500:
+          $ref: '#/components/responses/ServerError'
+
+components:
+  schemas:
+    User:
+      $ref: './schemas/User.yaml'
+    Class:
+      $ref: './schemas/Class.yaml'
+    ClassAddLesson:
+      $ref: './schemas/ClassesAddLesson.yaml'
+    Lesson:
+      $ref: './schemas/Lesson.yaml'
+    LessonsAddVideo:
+      $ref: './schemas/LessonsAddVideo.yaml'
+    LessonsAddKeynote:
+      $ref: './schemas/LessonsAddKeynote.yaml'
+    StudentEnroll:
+      $ref: './schemas/StudentEnroll.yaml'
+    StudentExpel:
+      $ref: './schemas/StudentExpel.yaml'
+    Video:
+      $ref: './schemas/Video.yaml'
+    Keynote:
+      $ref: './schemas/Keynote.yaml'
+  securitySchemes:
+    CookieAuth:
+      type: apiKey
+      in: cookie
+      name: user
+  responses:
+    BadRequest:
+      $ref: './responses/400/BadRequest.yaml'
+    ServerError:
+      $ref: './responses/500/ServerError.yaml'
+    NoContent:
+      $ref: './responses/200/NoContent.yaml'
+    Success:
+      $ref: './responses/200/Success.yaml'
+    NotAuthenticated:
+      $ref: './responses/400/NotAuthenticated.yaml'
+    Forbidden:
+      $ref: './responses/400/Forbidden.yaml'
+    UserCreated:
+      $ref: './responses/users/UserCreated.yaml'
+    UserUpdated:
+      $ref: './responses/users/UserUpdated.yaml'
+    UserGet:
+      $ref: './responses/users/UserGet.yaml'
+    UsersGet:
+      $ref: './responses/users/UsersGet.yaml'
+    ClassCreated:
+      $ref: './responses/classes/ClassCreated.yaml'
+    ClassUpdated:
+      $ref: './responses/classes/ClassUpdated.yaml'
+    ClassGet:
+      $ref: './responses/classes/ClassGet.yaml'
+    ClassesGet:
+      $ref: './responses/classes/ClassesGet.yaml'
+    LessonCreated:
+      $ref: './responses/lessons/LessonCreated.yaml'
+    LessonUpdated:
+      $ref: './responses/lessons/LessonUpdated.yaml'
+    LessonAdded:
+      $ref: './responses/classes/LessonAdded.yaml'
+    LessonGet:
+      $ref: './responses/lessons/LessonGet.yaml'
+    LessonsGet:
+      $ref: './responses/lessons/LessonsGet.yaml'
+    VideosGet:
+      $ref: './responses/videos/VideosGet.yaml'
+    VideoGet:
+      $ref: './responses/videos/VideoGet.yaml'
+    VideoCreated:
+      $ref: './responses/videos/VideoCreated.yaml'
+    VideoUpdated:
+      $ref: './responses/videos/VideoUpdated.yaml'
+    KeynotesGet:
+      $ref: './responses/keynotes/KeynotesGet.yaml'
+    KeynoteGet:
+      $ref: './responses/keynotes/KeynoteGet.yaml'
+    KeynoteCreated:
+      $ref: './responses/keynotes/KeynoteCreated.yaml'
+    KeynoteUpdated:
+      $ref: './responses/keynotes/KeynoteUpdated.yaml'

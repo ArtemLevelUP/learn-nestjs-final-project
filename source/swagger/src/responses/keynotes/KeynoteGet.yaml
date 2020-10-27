@@ -1,0 +1,10 @@
+description: 'Получена презентация с помощью hash'
+content:
+  application/json:
+    schema:
+      type: object
+      required:
+        - data
+      properties:
+        data:
+          $ref: './_Keynote.yaml'

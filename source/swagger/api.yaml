@@ -1,0 +1,1715 @@
+openapi: 3.0.2
+info:
+  version: 0.0.1
+  title: Nest.js Fundamentals Final Project Docs
+  description: Nest.js Fundamentals Final Project Docs
+tags:
+  - name: Auth
+    description: Эндпоинты для аутентификации и авторизации
+  - name: Users
+    description: Эндпоинты для управления пользователями
+  - name: Classes
+    description: Эндпоинты для управления потоками
+  - name: Lessons
+    description: Эндпоинты для управления уроками
+  - name: Videos
+    description: Эндпоинты для управления видео
+  - name: Keynotes
+    description: Эндпоинты для управления презентациями
+servers:
+  - url: 'http://localhost:5000'
+paths:
+  /login:
+    post:
+      summary: Залогинить пользователя
+      description: 'Эндпоинт используется для логина пользователя. После успешного логина необходимо в куки клиента записать идентификатор токена, который будет автоматически подкладываться во все последующие запросы.'
+      tags:
+        - Auth
+      parameters:
+        - name: auth
+          in: header
+          required: true
+          description: 'base64 string concatenated email + : + password'
+          schema:
+            example: Base amRvZUBlbWFpbC5jb206MTIzNDU2
+            type: string
+      responses:
+        '204':
+          description: Успешно установлена куки которая ответчает за авторизацию пользователя
+          headers:
+            Set-Cookie:
+              schema:
+                type: string
+                example: USERSESSIONID=abcde12345; Path=/;
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '500':
+          $ref: '#/components/responses/ServerError'
+  /logout:
+    post:
+      summary: Разлогинить пользователя
+      description: 'Эндпоинт используется для разлогина пользователя. В случае успешной операции необходимо удалить идентификатор токена из кук клиента, а также очистить токен из хранилища.'
+      security:
+        - CookieAuth: []
+      tags:
+        - Auth
+      responses:
+        '204':
+          $ref: '#/components/responses/NoContent'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/NotAuthenticated'
+        '500':
+          $ref: '#/components/responses/ServerError'
+  /users:
+    get:
+      summary: Получить пользователей
+      description: Эндпоинт используется для получения всех пользователей
+      tags:
+        - Users
+      security:
+        - CookieAuth: []
+      parameters:
+        - in: query
+          name: limit
+          required: true
+          schema:
+            type: integer
+            minimum: 1
+            maximum: 50
+            example: 15
+            default: 10
+          description: Ограничивате количество элементов в выборке
+        - in: query
+          name: page
+          required: true
+          schema:
+            type: integer
+            minimum: 1
+            example: 1
+            default: 1
+          description: Указывает на страницу
+      responses:
+        '200':
+          $ref: '#/components/responses/UsersGet'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '500':
+          $ref: '#/components/responses/ServerError'
+    post:
+      summary: Создать пользователя
+      description: Эндпоинт используется для создания пользователя. Необязательное условие состоит в том чтобы добавить проверку на уникальность email.
+      tags:
+        - Users
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/User'
+      responses:
+        '201':
+          $ref: '#/components/responses/UserCreated'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '500':
+          $ref: '#/components/responses/ServerError'
+  '/users/{userHash}':
+    get:
+      summary: Получить пользователя по hash
+      description: Эндпоинт используется для получения конкретного пользователя по его **hash**
+      tags:
+        - Users
+      security:
+        - CookieAuth: []
+      parameters:
+        - in: path
+          name: userHash
+          schema:
+            type: string
+          required: true
+          description: Хеш пользователя
+      responses:
+        '200':
+          $ref: '#/components/responses/UserGet'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '500':
+          $ref: '#/components/responses/ServerError'
+    put:
+      summary: Обновить пользователя
+      description: Эндпоинт используется для обновления пользователя по его **hash**
+      tags:
+        - Users
+      security:
+        - CookieAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/User'
+      parameters:
+        - in: path
+          name: userHash
+          schema:
+            type: string
+          required: true
+          description: Хеш пользователя
+      responses:
+        '200':
+          $ref: '#/components/responses/UserUpdated'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '500':
+          $ref: '#/components/responses/ServerError'
+    delete:
+      summary: Удалить пользователя
+      description: Эндпоинт используется для удаления пользователя по его **hash**
+      tags:
+        - Users
+      security:
+        - CookieAuth: []
+      parameters:
+        - in: path
+          name: userHash
+          schema:
+            type: string
+          required: true
+          description: Хеш пользователя
+      responses:
+        '204':
+          $ref: '#/components/responses/NoContent'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '500':
+          $ref: '#/components/responses/ServerError'
+  /classes:
+    get:
+      summary: Получить потоки
+      description: Эндпоинт используется получения всех потоков
+      tags:
+        - Classes
+      security:
+        - CookieAuth: []
+      parameters:
+        - in: query
+          name: limit
+          required: true
+          schema:
+            type: integer
+            minimum: 1
+            maximum: 50
+            example: 15
+            default: 10
+          description: Ограничивате количество элементов в выборке
+        - in: query
+          name: page
+          required: true
+          schema:
+            type: integer
+            minimum: 1
+            example: 1
+            default: 1
+          description: Указывает на страницу
+      responses:
+        '200':
+          $ref: '#/components/responses/ClassesGet'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '500':
+          $ref: '#/components/responses/ServerError'
+    post:
+      summary: Создать поток
+      description: Эндпоинт используется для создания потока
+      tags:
+        - Classes
+      security:
+        - CookieAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Class'
+      responses:
+        '201':
+          $ref: '#/components/responses/ClassCreated'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '500':
+          $ref: '#/components/responses/ServerError'
+  '/classes/{classHash}':
+    get:
+      summary: Получить поток по hash
+      description: Эндпоинт используется получения потока по его **hash**
+      tags:
+        - Classes
+      security:
+        - CookieAuth: []
+      parameters:
+        - in: path
+          name: classHash
+          schema:
+            type: string
+          required: true
+          description: Хеш потока
+      responses:
+        '200':
+          $ref: '#/components/responses/ClassGet'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '500':
+          $ref: '#/components/responses/ServerError'
+    put:
+      summary: Обновить поток
+      description: Эндпоинт используется для обновления потока по его **hash**
+      tags:
+        - Classes
+      security:
+        - CookieAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Class'
+      parameters:
+        - in: path
+          name: classHash
+          schema:
+            type: string
+          required: true
+          description: Хеш потока
+      responses:
+        '200':
+          $ref: '#/components/responses/ClassUpdated'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '500':
+          $ref: '#/components/responses/ServerError'
+    delete:
+      summary: Удалить поток
+      description: Эндпоинт используется для удаления потока по его **hash**
+      tags:
+        - Classes
+      security:
+        - CookieAuth: []
+      parameters:
+        - in: path
+          name: classHash
+          schema:
+            type: string
+          required: true
+          description: Хеш потока
+      responses:
+        '204':
+          $ref: '#/components/responses/NoContent'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '500':
+          $ref: '#/components/responses/ServerError'
+  '/classes/{classHash}/lessons':
+    post:
+      summary: Добавить урок к потоку
+      description: Эндпоинт используется для добавления урока к потоку.
+      tags:
+        - Classes
+      security:
+        - CookieAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ClassAddLesson'
+      parameters:
+        - in: path
+          name: classHash
+          schema:
+            type: string
+          required: true
+          description: Хеш потока
+      responses:
+        '201':
+          $ref: '#/components/responses/LessonAdded'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '500':
+          $ref: '#/components/responses/ServerError'
+  '/classes/{classHash}/lessons/{lessonHash}':
+    delete:
+      summary: Удалить урок с потока
+      description: Эндпоинт используется для удаления урока с потока.
+      tags:
+        - Classes
+      security:
+        - CookieAuth: []
+      parameters:
+        - in: path
+          name: classHash
+          schema:
+            type: string
+          required: true
+          description: Хеш потока
+        - in: path
+          name: lessonHash
+          schema:
+            type: string
+          required: true
+          description: Хеш урока
+      responses:
+        '204':
+          $ref: '#/components/responses/NoContent'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '500':
+          $ref: '#/components/responses/ServerError'
+  '/classes/{classHash}/enroll':
+    post:
+      summary: Зачислить студента на поток
+      description: Эндпоинт используется для зачисления студента на поток
+      tags:
+        - Classes
+      security:
+        - CookieAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/StudentEnroll'
+      parameters:
+        - in: path
+          name: classHash
+          schema:
+            type: string
+          required: true
+          description: Хеш потока
+      responses:
+        '204':
+          $ref: '#/components/responses/NoContent'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '500':
+          $ref: '#/components/responses/ServerError'
+  '/classes/{classHash}/expel':
+    post:
+      summary: Отчислить студента с потока
+      description: Эндпоинт используется для отчисления студента с потока
+      tags:
+        - Classes
+      security:
+        - CookieAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/StudentExpel'
+      parameters:
+        - in: path
+          name: classHash
+          schema:
+            type: string
+          required: true
+          description: Хеш потока
+      responses:
+        '204':
+          $ref: '#/components/responses/NoContent'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '500':
+          $ref: '#/components/responses/ServerError'
+  /lessons:
+    get:
+      summary: Получить уроки
+      description: Эндпоинт используется получения всех уроков
+      tags:
+        - Lessons
+      security:
+        - CookieAuth: []
+      parameters:
+        - in: query
+          name: limit
+          required: true
+          schema:
+            type: integer
+            minimum: 1
+            maximum: 50
+            example: 15
+            default: 10
+          description: Ограничивате количество элементов в выборке
+        - in: query
+          name: page
+          required: true
+          schema:
+            type: integer
+            minimum: 1
+            example: 1
+            default: 1
+          description: Указывает на страницу
+      responses:
+        '200':
+          $ref: '#/components/responses/LessonsGet'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '500':
+          $ref: '#/components/responses/ServerError'
+    post:
+      summary: Создать урок
+      description: Эндпоинт используется для создания урока
+      tags:
+        - Lessons
+      security:
+        - CookieAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Lesson'
+      responses:
+        '201':
+          $ref: '#/components/responses/LessonCreated'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '500':
+          $ref: '#/components/responses/ServerError'
+  '/lessons/{lessonHash}':
+    get:
+      summary: Получить урок по hash
+      description: Эндпоинт используется получения урока по его **hash**
+      tags:
+        - Lessons
+      security:
+        - CookieAuth: []
+      parameters:
+        - in: path
+          name: lessonHash
+          schema:
+            type: string
+          required: true
+          description: Хеш урока
+      responses:
+        '200':
+          $ref: '#/components/responses/LessonGet'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '500':
+          $ref: '#/components/responses/ServerError'
+    put:
+      summary: Обновить урок
+      description: Эндпоинт используется для обновления урока по его **hash**
+      tags:
+        - Lessons
+      security:
+        - CookieAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Lesson'
+      parameters:
+        - in: path
+          name: lessonHash
+          schema:
+            type: string
+          required: true
+          description: Хеш урока
+      responses:
+        '200':
+          $ref: '#/components/responses/LessonUpdated'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '500':
+          $ref: '#/components/responses/ServerError'
+    delete:
+      summary: Удалить урок
+      description: Эндпоинт используется для удаления урока по его **hash**
+      tags:
+        - Lessons
+      security:
+        - CookieAuth: []
+      parameters:
+        - in: path
+          name: lessonHash
+          schema:
+            type: string
+          required: true
+          description: Хеш урока
+      responses:
+        '204':
+          $ref: '#/components/responses/NoContent'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '500':
+          $ref: '#/components/responses/ServerError'
+  '/lessons/{lessonHash}/videos':
+    post:
+      summary: Добавить видео к уроку
+      description: Эндпоинт используется для добавления видео к уроку
+      tags:
+        - Lessons
+      security:
+        - CookieAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/LessonsAddVideo'
+      parameters:
+        - in: path
+          name: lessonHash
+          schema:
+            type: string
+          required: true
+          description: Хеш урока
+      responses:
+        '204':
+          $ref: '#/components/responses/NoContent'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '500':
+          $ref: '#/components/responses/ServerError'
+  '/lessons/{lessonHash}/keynotes':
+    post:
+      summary: Добавить презентацию к уроку
+      description: Эндпоинт используется для добавления презентации к уроку
+      tags:
+        - Lessons
+      security:
+        - CookieAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/LessonsAddKeynote'
+      parameters:
+        - in: path
+          name: lessonHash
+          schema:
+            type: string
+          required: true
+          description: Хеш урока
+      responses:
+        '204':
+          $ref: '#/components/responses/NoContent'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '500':
+          $ref: '#/components/responses/ServerError'
+  '/lessons/{lessonHash}/videos/{videoHash}':
+    get:
+      summary: Получить видео по уроку
+      description: Эндпоинт используется для получения видео по уроку
+      tags:
+        - Lessons
+      security:
+        - CookieAuth: []
+      parameters:
+        - in: path
+          name: lessonHash
+          schema:
+            type: string
+          required: true
+          description: Хеш урока
+        - in: path
+          name: videoHash
+          schema:
+            type: string
+          required: true
+          description: Хеш видео
+      responses:
+        '200':
+          $ref: '#/components/responses/VideoGet'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '500':
+          $ref: '#/components/responses/ServerError'
+    delete:
+      summary: Удалить видео из урока
+      description: Эндпоинт используется для удаления видео из урока
+      tags:
+        - Lessons
+      security:
+        - CookieAuth: []
+      parameters:
+        - in: path
+          name: lessonHash
+          schema:
+            type: string
+          required: true
+          description: Хеш урока
+        - in: path
+          name: videoHash
+          schema:
+            type: string
+          required: true
+          description: Хеш видео
+      responses:
+        '204':
+          $ref: '#/components/responses/NoContent'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '500':
+          $ref: '#/components/responses/ServerError'
+  '/lessons/{lessonHash}/keynotes/{keynoteHash}':
+    get:
+      summary: Получить презентацию по уроку
+      description: Эндпоинт используется для получения презентации по уроку
+      tags:
+        - Lessons
+      security:
+        - CookieAuth: []
+      parameters:
+        - in: path
+          name: lessonHash
+          schema:
+            type: string
+          required: true
+          description: Хеш урока
+        - in: path
+          name: keynoteHash
+          schema:
+            type: string
+          required: true
+          description: Хеш презентации
+      responses:
+        '200':
+          $ref: '#/components/responses/KeynoteGet'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '500':
+          $ref: '#/components/responses/ServerError'
+    delete:
+      summary: Удалить презентацию из урока
+      description: Эндпоинт используется для удаления презентации из урока
+      tags:
+        - Lessons
+      security:
+        - CookieAuth: []
+      parameters:
+        - in: path
+          name: lessonHash
+          schema:
+            type: string
+          required: true
+          description: Хеш урока
+        - in: path
+          name: keynoteHash
+          schema:
+            type: string
+          required: true
+          description: Хеш презентации
+      responses:
+        '204':
+          $ref: '#/components/responses/NoContent'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '500':
+          $ref: '#/components/responses/ServerError'
+  /videos:
+    get:
+      summary: Получить все видео
+      description: Эндпоинт используется для получения всех видео
+      tags:
+        - Videos
+      security:
+        - CookieAuth: []
+      parameters:
+        - in: query
+          name: limit
+          required: true
+          schema:
+            type: integer
+            minimum: 1
+            maximum: 50
+            example: 15
+            default: 10
+          description: Ограничивате количество элементов в выборке
+        - in: query
+          name: page
+          required: true
+          schema:
+            type: integer
+            minimum: 1
+            example: 1
+            default: 1
+          description: Указывает на страницу
+      responses:
+        '200':
+          $ref: '#/components/responses/VideosGet'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '500':
+          $ref: '#/components/responses/ServerError'
+    post:
+      summary: Создать видео
+      description: Эндпоинт используется для создания видео.
+      tags:
+        - Videos
+      security:
+        - CookieAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Video'
+      responses:
+        '201':
+          $ref: '#/components/responses/VideoCreated'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '500':
+          $ref: '#/components/responses/ServerError'
+  '/videos/{videoHash}':
+    get:
+      summary: Получить видео по hash
+      description: Эндпоинт используется для получения конкретного видео по его **hash**
+      tags:
+        - Videos
+      security:
+        - CookieAuth: []
+      parameters:
+        - in: path
+          name: videoHash
+          schema:
+            type: string
+          required: true
+          description: Хеш видео
+      responses:
+        '200':
+          $ref: '#/components/responses/VideoGet'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '500':
+          $ref: '#/components/responses/ServerError'
+    put:
+      summary: Обновить видео
+      description: Эндпоинт используется для обновления видео по его **hash**
+      tags:
+        - Videos
+      security:
+        - CookieAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Video'
+      parameters:
+        - in: path
+          name: videoHash
+          schema:
+            type: string
+          required: true
+          description: Хеш видео
+      responses:
+        '200':
+          $ref: '#/components/responses/VideoUpdated'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '500':
+          $ref: '#/components/responses/ServerError'
+    delete:
+      summary: Удалить видео
+      description: Эндпоинт используется для удаления видео по его **hash**
+      tags:
+        - Videos
+      security:
+        - CookieAuth: []
+      parameters:
+        - in: path
+          name: videoHash
+          schema:
+            type: string
+          required: true
+          description: Хеш видео
+      responses:
+        '204':
+          $ref: '#/components/responses/NoContent'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '500':
+          $ref: '#/components/responses/ServerError'
+  /keynotes:
+    get:
+      summary: Получить все презентации
+      description: Эндпоинт используется для получения всех презентаций
+      tags:
+        - Keynotes
+      security:
+        - CookieAuth: []
+      parameters:
+        - in: query
+          name: limit
+          required: true
+          schema:
+            type: integer
+            minimum: 1
+            maximum: 50
+            example: 15
+            default: 10
+          description: Ограничивате количество элементов в выборке
+        - in: query
+          name: page
+          required: true
+          schema:
+            type: integer
+            minimum: 1
+            example: 1
+            default: 1
+          description: Указывает на страницу
+      responses:
+        '200':
+          $ref: '#/components/responses/KeynotesGet'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '500':
+          $ref: '#/components/responses/ServerError'
+    post:
+      summary: Создать презентацию
+      description: Эндпоинт используется для создания презентаций.
+      tags:
+        - Keynotes
+      security:
+        - CookieAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Keynote'
+      responses:
+        '201':
+          $ref: '#/components/responses/KeynoteCreated'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '500':
+          $ref: '#/components/responses/ServerError'
+  '/keynotes/{keynoteHash}':
+    get:
+      summary: Получить презентацию по hash
+      description: Эндпоинт используется для получения конкретной презентации с помощью **hash**
+      tags:
+        - Keynotes
+      security:
+        - CookieAuth: []
+      parameters:
+        - in: path
+          name: keynoteHash
+          schema:
+            type: string
+          required: true
+          description: Хеш презентации
+      responses:
+        '200':
+          $ref: '#/components/responses/KeynoteGet'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '500':
+          $ref: '#/components/responses/ServerError'
+    put:
+      summary: Обновить презентацию
+      description: Эндпоинт используется для обновления презентации с помощью **hash**
+      tags:
+        - Keynotes
+      security:
+        - CookieAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Keynote'
+      parameters:
+        - in: path
+          name: keynoteHash
+          schema:
+            type: string
+          required: true
+          description: Хеш презентации
+      responses:
+        '200':
+          $ref: '#/components/responses/KeynoteUpdated'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '500':
+          $ref: '#/components/responses/ServerError'
+    delete:
+      summary: Удалить презентацию
+      description: Эндпоинт используется для удаления презентации с помощью **hash**
+      tags:
+        - Keynotes
+      security:
+        - CookieAuth: []
+      parameters:
+        - in: path
+          name: keynoteHash
+          schema:
+            type: string
+          required: true
+          description: Хеш презентации
+      responses:
+        '204':
+          $ref: '#/components/responses/NoContent'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '500':
+          $ref: '#/components/responses/ServerError'
+components:
+  schemas:
+    User:
+      required:
+        - name
+        - email
+        - phone
+        - password
+        - sex
+      properties:
+        name:
+          type: string
+          example: John Doe
+        email:
+          type: string
+          example: jdoe@email.com
+        phone:
+          type: string
+          example: '+380662332377'
+        password:
+          type: string
+          example: '123456'
+        sex:
+          type: string
+          example: m
+          enum:
+            - m
+            - f
+        role:
+          type: string
+          example: newbie
+          enum:
+            - newbie
+            - student
+            - teacher
+    Class:
+      required:
+        - title
+        - description
+        - order
+        - duration
+      properties:
+        title:
+          type: string
+          example: Backend
+        description:
+          type: string
+          example: Backend Online Class
+        order:
+          type: integer
+          example: 2
+          minimum: 1
+          maximum: 9999
+        duration:
+          type: object
+          required:
+            - started
+            - closed
+          properties:
+            started:
+              type: string
+              format: date-time
+              example: 2019-06-19T07:44:06.353Z
+            closed:
+              type: string
+              format: date-time
+              example: 2019-06-19T07:44:06.353Z
+    ClassAddLesson:
+      required:
+        - hash
+      properties:
+        lessonHash:
+          type: string
+          example: 10ba038e-48da-487b-96e8-8d3b99b6d18a
+    Lesson:
+      required:
+        - title
+        - description
+        - order
+      properties:
+        title:
+          type: string
+          example: 'Lesson 1: Introduction'
+        description:
+          type: string
+          example: Description for lesson 1
+        order:
+          type: integer
+          example: 2
+          minimum: 1
+          maximum: 9999
+        content:
+          type: object
+          properties:
+            videos:
+              type: array
+              minItems: 1
+              items:
+                type: string
+                example: videoHash
+            keynotes:
+              type: array
+              minItems: 1
+              items:
+                type: string
+                example: keynoteHash
+    LessonsAddVideo:
+      required:
+        - hash
+      properties:
+        videoHash:
+          type: string
+          example: 10ba038e-48da-487b-96e8-8d3b99b6d18a
+    LessonsAddKeynote:
+      required:
+        - hash
+      properties:
+        keynoteHash:
+          type: string
+          example: 10ba038e-48da-487b-96e8-8d3b99b6d18a
+    StudentEnroll:
+      required:
+        - userHash
+        - status
+      properties:
+        userHash:
+          type: string
+          format: uuid
+          example: 3fa85f64-5717-4562-b3fc-2c963f66afa6
+    StudentExpel:
+      required:
+        - userHash
+      properties:
+        userHash:
+          type: string
+          format: uuid
+          example: 3fa85f64-5717-4562-b3fc-2c963f66afa6
+    Video:
+      required:
+        - title
+        - order
+        - uri
+      properties:
+        title:
+          type: string
+          example: Node.js introduction
+        order:
+          type: integer
+          minimum: 1
+          maximum: 999
+          example: 1
+        uri:
+          type: string
+          example: 'https://lectrum.io/videos/lesson-1'
+    Keynote:
+      required:
+        - title
+        - order
+        - uri
+      properties:
+        title:
+          type: string
+          example: Node.js introduction
+        order:
+          type: integer
+          minimum: 1
+          maximum: 999
+          example: 1
+        uri:
+          type: string
+          example: 'https://lectrum.io/keynotes/lesson-1'
+  securitySchemes:
+    CookieAuth:
+      type: apiKey
+      in: cookie
+      name: user
+  responses:
+    BadRequest:
+      description: Не верный пейлоад
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              error:
+                type: string
+                example: Bad Request
+              message:
+                type: array
+                items:
+                  type: string
+                  example:
+                    - sex must be a valid enum value
+                    - role must be a valid enum value
+    ServerError:
+      description: Серверная ошибка
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              message:
+                type: string
+                example: some server error
+    NoContent:
+      description: 'Успех: Отсутствует тело ответа'
+    Success:
+      description: Успешный ответ
+    NotAuthenticated:
+      description: Требуется логин
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              message:
+                type: string
+                example: not authenticated
+    Forbidden:
+      description: Доступ запрещён
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              message:
+                type: string
+                example: not allowed
+    UserCreated:
+      description: Пользователь успешно создан
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              hash:
+                type: string
+                example: 10ba038e-48da-487b-96e8-8d3b99b6d18a
+    UserUpdated:
+      description: Пользователь успешно обновлен
+      content:
+        application/json:
+          schema:
+            type: object
+            required:
+              - data
+            properties:
+              data:
+                $ref: '#/components/responses/UserGet/content/application~1json/schema/properties/data'
+    UserGet:
+      description: Получен пользователь с помощью hash
+      content:
+        application/json:
+          schema:
+            type: object
+            required:
+              - data
+            properties:
+              data:
+                required:
+                  - hash
+                  - name
+                  - email
+                  - phone
+                  - password
+                  - sex
+                properties:
+                  hash:
+                    type: string
+                    format: uuid
+                    example: 3fa85f64-5717-4562-b3fc-2c963f66afa6
+                  name:
+                    type: string
+                    example: John Doe
+                  email:
+                    type: string
+                    example: jdoe@email.com
+                  phone:
+                    type: string
+                    example: '+380662332377'
+                  password:
+                    type: string
+                    example: '123456'
+                  sex:
+                    type: string
+                    example: m
+                    enum:
+                      - m
+                      - f
+                  role:
+                    type: string
+                    example: newbie
+                    enum:
+                      - newbie
+                      - student
+                      - teacher
+    UsersGet:
+      description: Получены все пользователи
+      content:
+        application/json:
+          schema:
+            type: object
+            required:
+              - data
+            properties:
+              data:
+                type: array
+                items:
+                  minItems: 0
+                  maxItems: 50
+                  $ref: '#/components/responses/UserGet/content/application~1json/schema/properties/data'
+    ClassCreated:
+      description: Поток успешно создан
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              hash:
+                type: string
+                example: 10ba038e-48da-487b-96e8-8d3b99b6d18a
+    ClassUpdated:
+      description: Поток успешно обновлен
+      content:
+        application/json:
+          schema:
+            type: object
+            required:
+              - data
+            properties:
+              data:
+                $ref: '#/components/responses/ClassGet/content/application~1json/schema/properties/data'
+    ClassGet:
+      description: Получен поток с помощью hash
+      content:
+        application/json:
+          schema:
+            type: object
+            required:
+              - data
+            properties:
+              data:
+                type: object
+                required:
+                  - title
+                  - description
+                  - hash
+                  - students
+                  - lessons
+                  - duration
+                  - order
+                  - created
+                  - modified
+                properties:
+                  title:
+                    type: string
+                    example: Backend Online
+                  description:
+                    type: string
+                    example: Backend Online 3
+                  hash:
+                    type: string
+                    format: uuid
+                    example: 3fa85f64-5717-4562-b3fc-2c963f66afa6
+                  users:
+                    type: array
+                    items:
+                      type: object
+                      required:
+                        - hash
+                        - name
+                        - email
+                        - phone
+                        - password
+                        - sex
+                      properties:
+                        hash:
+                          type: string
+                          format: uuid
+                          example: 3fa85f64-5717-4562-b3fc-2c963f66afa6
+                        name:
+                          type: string
+                          example: John Doe
+                        email:
+                          type: string
+                          example: jdoe@email.com
+                        phone:
+                          type: string
+                          example: '+380662332377'
+                        password:
+                          type: string
+                          example: '123456'
+                        sex:
+                          type: string
+                          example: m
+                          enum:
+                            - m
+                            - f
+                        role:
+                          type: string
+                          example: newbie
+                          enum:
+                            - newbie
+                            - student
+                            - teacher
+                  lessons:
+                    type: array
+                    minItems: 1
+                    items:
+                      type: object
+                      required:
+                        - title
+                        - description
+                        - hash
+                        - order
+                        - availability
+                      properties:
+                        title:
+                          type: string
+                          format: uuid
+                          example: Node.js
+                        description:
+                          type: string
+                          format: uuid
+                          example: Node.js introduction
+                        hash:
+                          type: string
+                          format: uuid
+                          example: 3fa85f64-5717-4562-b3fc-2c963f66afa6
+                        order:
+                          type: integer
+                          minimum: 1
+                          example: 1
+                        availability:
+                          type: array
+                          minItems: 1
+                          items:
+                            type: string
+                            enum:
+                              - standard
+                              - select
+                              - premium
+                            example:
+                              - select
+                              - premium
+                  duration:
+                    type: object
+                    required:
+                      - started
+                      - closed
+                    properties:
+                      started:
+                        type: string
+                        format: date-time
+                        example: 2019-06-18T20:00:03.567Z
+                      closed:
+                        type: string
+                        format: date-time
+                        example: 2019-06-19T12:04:10.304Z
+                  order:
+                    type: integer
+                    minimum: 1
+                    example: 1
+                  created:
+                    type: string
+                    format: date-time
+                    example: 2019-06-18T20:00:03.567Z
+                  modified:
+                    type: string
+                    format: date-time
+                    example: 2019-06-19T12:04:10.304Z
+    ClassesGet:
+      description: Получены все потоки
+      content:
+        application/json:
+          schema:
+            type: object
+            required:
+              - data
+            properties:
+              data:
+                type: array
+                items:
+                  minItems: 0
+                  maxItems: 50
+                  $ref: '#/components/responses/ClassGet/content/application~1json/schema/properties/data'
+    LessonCreated:
+      description: Урок успешно создан
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              hash:
+                type: string
+                example: 10ba038e-48da-487b-96e8-8d3b99b6d18a
+    LessonUpdated:
+      description: Урок успешно обновлен
+      content:
+        application/json:
+          schema:
+            type: object
+            required:
+              - data
+            properties:
+              data:
+                $ref: '#/components/responses/LessonGet/content/application~1json/schema/properties/data'
+    LessonAdded:
+      description: Урок успешно добавлен к потоку
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              hash:
+                type: string
+                example: 10ba038e-48da-487b-96e8-8d3b99b6d18a
+    LessonGet:
+      description: Получен урок с помощью hash
+      content:
+        application/json:
+          schema:
+            type: object
+            required:
+              - data
+            properties:
+              data:
+                type: object
+                required:
+                  - title
+                  - description
+                  - hash
+                  - order
+                  - content
+                  - created
+                  - modified
+                properties:
+                  title:
+                    type: string
+                    format: uuid
+                    example: Node.js
+                  description:
+                    type: string
+                    format: uuid
+                    example: Node.js introduction
+                  hash:
+                    type: string
+                    format: uuid
+                    example: 3fa85f64-5717-4562-b3fc-2c963f66afa6
+                  order:
+                    type: integer
+                    minimum: 1
+                    example: 1
+                  content:
+                    type: object
+                    required:
+                      - videos
+                      - keynotes
+                    properties:
+                      videos:
+                        type: array
+                        minItems: 1
+                        items:
+                          type: object
+                          properties:
+                            hash:
+                              type: string
+                              example: videoHash
+                            title:
+                              type: string
+                              example: Node.js architecture
+                            order:
+                              type: integer
+                              minimum: 1
+                              example: 1
+                            uri:
+                              type: string
+                              example: 'https://lectrum.io/videos/lesson-1'
+                      keynotes:
+                        type: array
+                        minItems: 1
+                        items:
+                          type: object
+                          properties:
+                            hash:
+                              type: string
+                              example: keynoteHash
+                            title:
+                              type: string
+                              example: Node.js architecture
+                            order:
+                              type: integer
+                              minimum: 1
+                              example: 1
+                            uri:
+                              type: string
+                              example: 'https://lectrum.io/keynotes/lesson-1'
+                  created:
+                    type: string
+                    format: date-time
+                    example: 2019-06-18T20:00:03.567Z
+                  modified:
+                    type: string
+                    format: date-time
+                    example: 2019-06-19T12:04:10.304Z
+    LessonsGet:
+      description: Получены все уроки
+      content:
+        application/json:
+          schema:
+            type: object
+            required:
+              - data
+            properties:
+              data:
+                type: array
+                items:
+                  minItems: 0
+                  maxItems: 50
+                  $ref: '#/components/responses/LessonGet/content/application~1json/schema/properties/data'
+    VideosGet:
+      description: Получены все видео
+      content:
+        application/json:
+          schema:
+            type: object
+            required:
+              - data
+            properties:
+              data:
+                type: array
+                items:
+                  minItems: 0
+                  maxItems: 50
+                  $ref: '#/components/responses/VideoGet/content/application~1json/schema/properties/data'
+    VideoGet:
+      description: Получено видео с помощью hash
+      content:
+        application/json:
+          schema:
+            type: object
+            required:
+              - data
+            properties:
+              data:
+                type: object
+                required:
+                  - title
+                  - order
+                  - uri
+                properties:
+                  hash:
+                    type: string
+                    example: videoHash
+                  title:
+                    type: string
+                    example: Node.js architecture
+                  order:
+                    type: integer
+                    minimum: 1
+                    example: 1
+                  uri:
+                    type: string
+                    example: 'https://lectrum.io/videos/lesson-1'
+    VideoCreated:
+      description: Видео успешно создано
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              hash:
+                type: string
+                example: 10ba038e-48da-487b-96e8-8d3b99b6d18a
+    VideoUpdated:
+      description: Видео успешно обновлено
+      content:
+        application/json:
+          schema:
+            type: object
+            required:
+              - data
+            properties:
+              data:
+                $ref: '#/components/responses/VideoGet/content/application~1json/schema/properties/data'
+    KeynotesGet:
+      description: Получены все презентации
+      content:
+        application/json:
+          schema:
+            type: object
+            required:
+              - data
+            properties:
+              data:
+                type: array
+                items:
+                  minItems: 0
+                  maxItems: 50
+                  $ref: '#/components/responses/KeynoteGet/content/application~1json/schema/properties/data'
+    KeynoteGet:
+      description: Получена презентация с помощью hash
+      content:
+        application/json:
+          schema:
+            type: object
+            required:
+              - data
+            properties:
+              data:
+                type: object
+                required:
+                  - title
+                  - order
+                  - uri
+                properties:
+                  hash:
+                    type: string
+                    example: keynoteHash
+                  title:
+                    type: string
+                    example: Node.js architecture
+                  order:
+                    type: integer
+                    minimum: 1
+                    example: 1
+                  uri:
+                    type: string
+                    example: 'https://lectrum.io/keynotes/lesson-1'
+    KeynoteCreated:
+      description: Презентация успешно создана
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              hash:
+                type: string
+                example: 10ba038e-48da-487b-96e8-8d3b99b6d18a
+    KeynoteUpdated:
+      description: Презентация успешно обновлена
+      content:
+        application/json:
+          schema:
+            type: object
+            required:
+              - data
+            properties:
+              data:
+                $ref: '#/components/responses/KeynoteGet/content/application~1json/schema/properties/data'

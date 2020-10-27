@@ -1,0 +1,78 @@
+type: object
+required:
+ - title
+ - description
+ - hash
+ - order
+ - content
+ - created
+ - modified
+properties:
+  title:
+    type: string
+    format: uuid
+    example: Node.js
+  description:
+    type: string
+    format: uuid
+    example: Node.js introduction
+  hash:
+    type: string
+    format: uuid
+    example: 3fa85f64-5717-4562-b3fc-2c963f66afa6
+  order:
+    type: integer
+    minimum: 1
+    example: 1
+  content:
+    type: object
+    required:
+      - videos
+      - keynotes
+    properties:
+      videos:
+        type: array
+        minItems: 1
+        items:
+          type: object
+          properties:
+            hash:
+              type: string
+              example: videoHash
+            title:
+              type: string
+              example: Node.js architecture
+            order:
+              type: integer
+              minimum: 1
+              example: 1
+            uri:
+              type: string
+              example: https://lectrum.io/videos/lesson-1
+      keynotes:
+        type: array
+        minItems: 1
+        items:
+          type: object
+          properties:
+            hash:
+              type: string
+              example: keynoteHash
+            title:
+              type: string
+              example: Node.js architecture
+            order:
+              type: integer
+              minimum: 1
+              example: 1
+            uri:
+              type: string
+              example: https://lectrum.io/keynotes/lesson-1
+  created:
+    type: string
+    format: date-time
+    example: 2019-06-18T20:00:03.567Z
+  modified:
+    type: string
+    format: date-time
+    example: 2019-06-19T12:04:10.304Z

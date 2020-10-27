@@ -1,0 +1,32 @@
+required:
+  - hash
+  - name
+  - email
+  - phone
+  - password
+  - sex
+properties:
+  hash:
+    type: string
+    format: uuid
+    example: 3fa85f64-5717-4562-b3fc-2c963f66afa6
+  name:
+    type: string
+    example: "John Doe"
+  email:
+    type: string
+    example: "jdoe@email.com"
+  phone:
+    type: string
+    example: "+380662332377"
+  password:
+    type: string
+    example: "123456"
+  sex:
+    type: string
+    example: m
+    enum: ["m","f"]
+  role:
+    type: string
+    example: newbie
+    enum:    [newbie, student, teacher]

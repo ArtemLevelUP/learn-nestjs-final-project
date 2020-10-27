@@ -1,0 +1,9 @@
+description: 'Требуется логин'
+content:
+  application/json:
+    schema:
+      type: object
+      properties:
+        message:
+          type: string
+          example: 'not authenticated'

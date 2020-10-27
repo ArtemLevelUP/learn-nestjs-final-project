@@ -1,0 +1,27 @@
+required:
+  - name
+  - email
+  - phone
+  - password
+  - sex
+properties:
+  name:
+    type: string
+    example: "John Doe"
+  email:
+    type: string
+    example: "jdoe@email.com"
+  phone:
+    type: string
+    example: "+380662332377"
+  password:
+    type: string
+    example: "123456"
+  sex:
+    type: string
+    example: m
+    enum: ["m","f"]
+  role:
+    type: string
+    example: newbie
+    enum:    [newbie, student, teacher]

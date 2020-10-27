@@ -1,0 +1,16 @@
+required:
+  - title
+  - order
+  - uri
+properties:
+  title:
+    type: string
+    example: "Node.js introduction"
+  order:
+    type: integer
+    minimum: 1
+    maximum: 999
+    example: 1
+  uri:
+    type: string
+    example: https://lectrum.io/videos/lesson-1

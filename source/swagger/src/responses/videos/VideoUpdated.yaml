@@ -1,0 +1,10 @@
+description: 'Видео успешно обновлено'
+content:
+  application/json:
+    schema:
+      type: object
+      required:
+        - data
+      properties:
+        data:
+          $ref: './_Video.yaml'

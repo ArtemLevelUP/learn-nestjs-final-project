@@ -1,0 +1,14 @@
+description: 'Получены все видео'
+content:
+  application/json:
+    schema:
+      type: object
+      required:
+        - data
+      properties:
+        data:
+          type: array
+          items:
+            minItems: 0
+            maxItems: 50
+            $ref: './_Video.yaml'
